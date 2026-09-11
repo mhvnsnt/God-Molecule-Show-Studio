@@ -3,11 +3,11 @@
   "version": 2,
   "source_repo": "mhvnsnt/God-Molecule-Show-Studio",
   "target_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
-  "source_head": "9671bc2eaec1768526c5604b086846f6253d3798",
+  "source_head": "9fadf5890d5bda180cd8e6da990306d4b97e3416",
   "god_molecule_oral_gate_commit": "7b79df179ddfa0c02ed196dd2c4b3ad51d80f6f2",
   "god_molecule_rhubarb_commit": "532aa45f111a805528e80b7d2657688ba155069c",
   "god_molecule_evidence_contract": "157ae0166c1eb15f448a9b6921968310a17f2462",
-  "trippedd_oral_bridge_commit": "9843f5daa53288b445c7391588e2c67222bccd24",
+  "trippedd_oral_bridge_commit": "bd764b3848bd59d0aa09a66b6b6af97f8bfd78e5",
   "trippedd_runtime_bridge_commit": "60e3bc2a3521ee41f0dc0d419032b3535a22258d",
   "identity_rule": "MARS_CANONICAL immutable; derived facial/oral assets only",
   "promotion_order": [
@@ -32,7 +32,7 @@
     "trippedd": "artifacts/evidence/god_molecule/"
   },
   "roles": {
-    "god_molecule_show_studio": "character/creative execution laboratory \u2014 oral, Rhubarb, evidence frames, performance",
+    "god_molecule_show_studio": "character/creative execution laboratory — oral, Rhubarb, evidence frames, performance",
     "trippedd_production_studios": "orchestration, provenance, QC gates, episode packaging, environment/USD, delivery"
   },
   "canon_docs": {
@@ -42,6 +42,8 @@
     "identity": "production/god-molecule/MARS-REFERENCE-CONTRACT.md"
   },
   "trippedd_ep01_pack_commits_note": "EP01 COLD_OPEN/SCENE_MAP/SC01-SC04/TONNO specs + GM-WORLD-0001.usda on TRIPPEDD main; subordinate to Show Bible",
-  "grok_oral_survey_commit": "9843f5daa53288b445c7391588e2c67222bccd24",
-  "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS \u2260 available until install+execute+artifact+provenance."
+  "grok_oral_survey_commit": "1a1549c04170997079f92573d8c8d29a0ae6e6",
+  "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS ≠ available until install+execute+artifact+provenance.",
+  "trippedd_oral_runner_commit": "d031c395571391d5d6a1e9ba1dce8194fd09b25b",
+  "bridge_sync_note": "Pinned to the current God Molecule and TRIPPEDD production heads; TRIPPEDD oral implementation is the single executable oral system."
 }
