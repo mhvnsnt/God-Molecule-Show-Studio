@@ -1,9 +1,9 @@
 {
   "bridge": "god-molecule-trippedd",
-  "version": 2,
+  "version": 4,
   "source_repo": "mhvnsnt/God-Molecule-Show-Studio",
   "target_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
-  "source_head": "9fadf5890d5bda180cd8e6da990306d4b97e3416",
+  "source_head": "cb27207fe1606605f6e766bbed4a35f5a3815a1a",
   "god_molecule_oral_gate_commit": "7b79df179ddfa0c02ed196dd2c4b3ad51d80f6f2",
   "god_molecule_rhubarb_commit": "532aa45f111a805528e80b7d2657688ba155069c",
   "god_molecule_evidence_contract": "157ae0166c1eb15f448a9b6921968310a17f2462",
@@ -32,7 +32,7 @@
     "trippedd": "artifacts/evidence/god_molecule/"
   },
   "roles": {
-    "god_molecule_show_studio": "character/creative execution laboratory — oral, Rhubarb, evidence frames, performance",
+    "god_molecule_show_studio": "character/creative execution laboratory \u2014 oral, Rhubarb, evidence frames, performance",
     "trippedd_production_studios": "orchestration, provenance, QC gates, episode packaging, environment/USD, delivery"
   },
   "canon_docs": {
@@ -43,8 +43,30 @@
   },
   "trippedd_ep01_pack_commits_note": "EP01 COLD_OPEN/SCENE_MAP/SC01-SC04/TONNO specs + GM-WORLD-0001.usda on TRIPPEDD main; subordinate to Show Bible",
   "grok_oral_survey_commit": "1a1549c04170997079f92573d8c8d29a0ae6e6",
-  "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS ≠ available until install+execute+artifact+provenance.",
+  "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS \u2260 available until install+execute+artifact+provenance.",
   "trippedd_oral_runner_commit": "d031c395571391d5d6a1e9ba1dce8194fd09b25b",
-  "bridge_sync_note": "Pinned to the current God Molecule and TRIPPEDD production heads; TRIPPEDD oral implementation is the single executable oral system.",
-  "trippedd_bridge_head": "ece630df8efff4ebe18b07fb70da225e5f83f918"
+  "bridge_sync_note": "Bridge refreshed after God-Molecule-Show-Studio main advances. TRIPPEDD executable oral path is the single production implementation; God repo remains the character/creative laboratory.",
+  "trippedd_gate_tools": {
+    "oral_placement_gate": "tools/character/build_mars_oral_bridge.py",
+    "aperture_survey": "tools/character/survey_oral_aperture.py",
+    "human_review_evidence": "tools/character/assemble_human_review_package.py",
+    "jaw_separation": "tools/character/measure_jaw_separation.py",
+    "real_audio_rhubarb": "tools/animation/validate_rhubarb_json.py",
+    "expressions_and_blinks": "tools/character/validate_expression_blink_package.py",
+    "creative_render": "tools/animation/validate_performance_render.py",
+    "seeded_environment": "tools/environment/run_first_creative_shot.sh",
+    "gaussian_splat": "tools/environment/ply_to_particle_field.py"
+  },
+  "target_head": "ece630df8efff4ebe18b07fb70da225e5f83f918",
+  "trippedd_oral_y_depth_commit": "60e21a38",
+  "trippedd_teeth_gums_commit": "bd764b38",
+  "trippedd_survey_shell_commit": "1a1549c0",
+  "trippedd_survey_cli_commit": "d031c395",
+  "oral_pipeline_notes": {
+    "lip_plane": "measured Y-depth axis (lip y ~= -0.21), not Z-facing fallback",
+    "anatomy": "explicit teeth_mask and gums_mask as renderable objects + sock/tongue",
+    "solidify": "inward offset=-1",
+    "survey": "CLI --output; shell hits excluded from aperture denominator/protrusion gate",
+    "visual_pass_requires": "REST OPEN PROFILE FRONT evidence + human review \u2014 code PASS is not visual PASS"
+  }
 }
