@@ -1,0 +1,119 @@
+name: God Molecule Blender Render Worker
+
+on:
+  workflow_dispatch:
+    inputs:
+      drive_folder_url:
+        description: "Public Google Drive folder containing MARS_CANONICAL"
+        required: false
+        default: "https://drive.google.com/drive/folders/1Y6NppaQwnM2zutvF_hsIQZCq02BQrNb8"
+      run_oral:
+        description: "Run the real oral repair/survey when donor + mouth frame are present"
+        required: false
+        default: "true"
+  push:
+    paths:
+      - "tools/character/**"
+      - "tools/environment/**"
+      - "config/**"
+      - ".github/workflows/god-molecule-blender-worker.yml"
+
+jobs:
+  blender-render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      actions: write
+
+    steps:
+      - name: Checkout with LFS
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 1
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl wget unzip xz-utils git-lfs python3-pip libgl1 libegl1 libx11-6 libxrender1 libxi6 libxfixes3 libxxf86vm1 libxkbcommon0
+          git lfs pull || true
+          python3 -m pip install --user gdown
+
+      - name: Install portable Blender
+        run: |
+          set -eux
+          mkdir -p vendor
+          curl -L --fail --retry 4 -o /tmp/blender.tar.xz https://download.blender.org/release/Blender4.2/blender-4.2.1-linux-x64.tar.xz
+          tar -xJf /tmp/blender.tar.xz -C vendor
+          ln -sfn "$PWD"/vendor/blender-4.2.1-linux-x64/blender "$PWD"/vendor/blender
+          "$PWD"/vendor/blender/blender --version
+
+      - name: Acquire public Drive assets
+        env:
+          DRIVE_FOLDER_URL: ${{ inputs.drive_folder_url || 'https://drive.google.com/drive/folders/1Y6NppaQwnM2zutvF_hsIQZCq02BQrNb8' }}
+        run: |
+          set -euxo pipefail
+          mkdir -p .artifacts/drive
+          python3 -m gdown --folder "$DRIVE_FOLDER_URL" -O .artifacts/drive --remaining-ok || true
+          find .artifacts/drive -type f -printf '%p %s bytes\n' | sort | head -200
+
+      - name: Locate MARS_CANONICAL
+        run: |
+          set -euo pipefail
+          mkdir -p .artifacts/evidence
+          find . .artifacts/drive -type f \( -iname '*MARS*CANONICAL*' -o -iname 'MARS_CANONICAL.glb' -o -iname 'MARS_CANONICAL.gltf' -o -iname 'MARS_CANONICAL.blend' \) -print > .artifacts/evidence/mars_candidates.txt || true
+          cat .artifacts/evidence/mars_candidates.txt
+          if [ ! -s .artifacts/evidence/mars_candidates.txt ]; then
+            echo "MARS_CANONICAL: NOT_FOUND" | tee .artifacts/evidence/state.txt
+            exit 42
+          fi
+          MARS_PATH=$(head -n 1 .artifacts/evidence/mars_candidates.txt)
+          sha256sum "$MARS_PATH" | tee .artifacts/evidence/mars.sha256
+          printf '%s\n' "$MARS_PATH" > .artifacts/evidence/mars_path.txt
+          echo "MARS_CANONICAL: VERIFIED"
+
+      - name: Inventory executable oral prerequisites
+        run: |
+          set -euo pipefail
+          {
+            echo "=== repo oral tools ==="
+            find tools/character -maxdepth 2 -type f | sort || true
+            echo "=== likely donor/frame files ==="
+            find . .artifacts/drive -type f \( -iname '*gnm*donor*.npz' -o -iname '*mouth*frame*.json' -o -iname '*mouth*frame*.npz' \) -print || true
+          } | tee .artifacts/evidence/oral_prerequisites.txt
+
+      - name: Run real Blender oral repair when inputs exist
+        if: ${{ inputs.run_oral != 'false' }}
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          MARS_PATH=$(cat .artifacts/evidence/mars_path.txt)
+          DONOR=$(find . .artifacts/drive -type f -iname '*gnm*donor*.npz' -print -quit || true)
+          FRAME=$(find . .artifacts/drive -type f -iname '*mouth*frame*.json' -print -quit || true)
+          if [ -z "$DONOR" ] || [ -z "$FRAME" ]; then
+            echo "ORAL_EXECUTION: BLOCKED — donor or measured mouth frame not physically present"
+            exit 43
+          fi
+          mkdir -p .artifacts/god-molecule/mars-oral
+          "$PWD"/vendor/blender/blender -b "$MARS_PATH" --python tools/character/build_mars_oral_bridge.py --             --donor-npz "$DONOR"             --mouth-frame "$FRAME"             --output "$PWD/.artifacts/god-molecule/mars-oral/MARS_ORAL_REPAIRED.blend"             --render-dir "$PWD/.artifacts/god-molecule/mars-oral/render"
+          "$PWD"/vendor/blender/blender -b "$PWD/.artifacts/god-molecule/mars-oral/MARS_ORAL_REPAIRED.blend"             --python tools/character/survey_oral_aperture.py --             --mouth-frame "$FRAME"             --output "$PWD/.artifacts/god-molecule/mars-oral/survey.json"
+
+      - name: Package physical evidence
+        if: always()
+        run: |
+          set +e
+          mkdir -p .artifacts/evidence
+          date -u +%FT%TZ > .artifacts/evidence/worker_completed_utc.txt
+          find .artifacts -type f -printf '%p %s bytes\n' | sort > .artifacts/evidence/artifact_inventory.txt
+          tar -czf god-molecule-render-evidence.tgz .artifacts
+          echo "Evidence archive created: god-molecule-render-evidence.tgz"
+
+      - name: Upload physical evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: god-molecule-render-evidence-${{ github.run_id }}
+          path: god-molecule-render-evidence.tgz
+          if-no-files-found: error
+          retention-days: 14
