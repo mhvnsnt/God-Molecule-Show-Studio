@@ -3,6 +3,8 @@ import { AppView } from './types';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
 import { ShowBible } from './components/ShowBible';
+import { Cosmology } from './components/Cosmology';
+import { CharacterView } from './components/Character';
 import { FileCode2 } from 'lucide-react';
 
 export default function App() {
@@ -15,9 +17,11 @@ export default function App() {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {currentView === 'preview' && <Dashboard />}
         {currentView === 'bible' && <ShowBible />}
+        {currentView === 'cosmology' && <Cosmology />}
+        {currentView === 'character' && <CharacterView />}
         
         {/* Placeholders for other views */}
-        {['episode-builder', 'scene-builder', 'character', 'world-builder', 'timeline'].includes(currentView) && (
+        {['episode-builder', 'scene-builder', 'world-builder', 'timeline'].includes(currentView) && (
           <div className="flex-1 bg-zinc-950 flex flex-col items-center justify-center text-zinc-500">
             <FileCode2 size={64} className="mb-6 opacity-20" />
             <h2 className="text-xl font-mono tracking-widest uppercase text-zinc-400 mb-2">Module Not Initialized</h2>
