@@ -7,7 +7,7 @@
   "god_molecule_oral_gate_commit": "7b79df179ddfa0c02ed196dd2c4b3ad51d80f6f2",
   "god_molecule_rhubarb_commit": "532aa45f111a805528e80b7d2657688ba155069c",
   "god_molecule_evidence_contract": "157ae0166c1eb15f448a9b6921968310a17f2462",
-  "trippedd_oral_bridge_commit": "bd764b3848bd59d0aa09a66b6b6af97f8bfd78e5",
+  "trippedd_oral_bridge_commit": "60e21a38c1fa9fcc8458a41c2675d06b5bb43880",
   "trippedd_runtime_bridge_commit": "60e3bc2a3521ee41f0dc0d419032b3535a22258d",
   "identity_rule": "MARS_CANONICAL immutable; derived facial/oral assets only",
   "promotion_order": [
@@ -45,5 +45,6 @@
   "grok_oral_survey_commit": "1a1549c04170997079f92573d8c8d29a0ae6e6",
   "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS ≠ available until install+execute+artifact+provenance.",
   "trippedd_oral_runner_commit": "d031c395571391d5d6a1e9ba1dce8194fd09b25b",
-  "bridge_sync_note": "Pinned to the current God Molecule and TRIPPEDD production heads; TRIPPEDD oral implementation is the single executable oral system."
+  "bridge_sync_note": "Pinned to the current God Molecule and TRIPPEDD production heads; TRIPPEDD oral implementation is the single executable oral system.",
+  "trippedd_bridge_head": "ece630df8efff4ebe18b07fb70da225e5f83f918"
 }
