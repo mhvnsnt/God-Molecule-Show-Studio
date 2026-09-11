@@ -1,0 +1,34 @@
+{
+  "bridge": "god-molecule-trippedd",
+  "version": 1,
+  "source_repo": "mhvnsnt/God-Molecule-Show-Studio",
+  "target_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
+  "source_head": "9671bc2eaec1768526c5604b086846f6253d3798",
+  "god_molecule_oral_gate_commit": "7b79df179ddfa0c02ed196dd2c4b3ad51d80f6f2",
+  "god_molecule_rhubarb_commit": "532aa45f111a805528e80b7d2657688ba155069c",
+  "god_molecule_evidence_contract": "157ae0166c1eb15f448a9b6921968310a17f2462",
+  "trippedd_oral_bridge_commit": "9843f5daa53288b445c7391588e2c67222bccd24",
+  "trippedd_runtime_bridge_commit": "60e3bc2a3521ee41f0dc0d419032b3535a22258d",
+  "identity_rule": "MARS_CANONICAL immutable; derived facial/oral assets only",
+  "promotion_order": [
+    "oral_placement_gate",
+    "aperture_survey",
+    "human_review_evidence",
+    "jaw_separation",
+    "real_audio_rhubarb",
+    "expressions_and_blinks",
+    "creative_render",
+    "seeded_environment",
+    "gaussian_splat"
+  ],
+  "evidence_contract": {
+    "required": true,
+    "human_visible": true,
+    "telemetry_substitution": false,
+    "creative_final_requires_physical_artifact": true
+  },
+  "handoff_paths": {
+    "god_molecule": "artifacts/evidence/",
+    "trippedd": "artifacts/evidence/god_molecule/"
+  }
+}
