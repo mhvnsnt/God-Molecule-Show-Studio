@@ -1,6 +1,6 @@
 {
   "bridge": "god-molecule-trippedd",
-  "version": 1,
+  "version": 2,
   "source_repo": "mhvnsnt/God-Molecule-Show-Studio",
   "target_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
   "source_head": "9671bc2eaec1768526c5604b086846f6253d3798",
@@ -30,5 +30,18 @@
   "handoff_paths": {
     "god_molecule": "artifacts/evidence/",
     "trippedd": "artifacts/evidence/god_molecule/"
-  }
+  },
+  "roles": {
+    "god_molecule_show_studio": "character/creative execution laboratory \u2014 oral, Rhubarb, evidence frames, performance",
+    "trippedd_production_studios": "orchestration, provenance, QC gates, episode packaging, environment/USD, delivery"
+  },
+  "canon_docs": {
+    "show_bible": "God-Molecule-Show-Studio ShowBible/Cosmology UI",
+    "trippedd_canon": "docs/god_molecule/GOD_MOLECULE_CANON.md",
+    "ep01": "production/GOD_MOLECULE_EPISODE_01/",
+    "identity": "production/god-molecule/MARS-REFERENCE-CONTRACT.md"
+  },
+  "trippedd_ep01_pack_commits_note": "EP01 COLD_OPEN/SCENE_MAP/SC01-SC04/TONNO specs + GM-WORLD-0001.usda on TRIPPEDD main; subordinate to Show Bible",
+  "grok_oral_survey_commit": "9843f5daa53288b445c7391588e2c67222bccd24",
+  "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS \u2260 available until install+execute+artifact+provenance."
 }
