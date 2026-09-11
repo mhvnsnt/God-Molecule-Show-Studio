@@ -2,6 +2,7 @@ import bpy
 import sys
 import os
 import json
+import math
 
 
 RHUBARB_TO_VISEME = {
@@ -84,6 +85,23 @@ def animate_mars(input_path, output_dir, rhubarb_path):
     # These are real Rhubarb controls. No invented transcript or cadence.
     count = key_real_lipsync(mars_mesh, cues, fps)
     print(f"[FACE] REAL_AUDIO: {count} Rhubarb mouth cues applied")
+
+    # Bounded jaw motion is driven by the actual Rhubarb cue timing.
+    # Visemes remain the primary facial control; this adds measured hinge motion.
+    armatures = [obj for obj in bpy.context.scene.objects if obj.type == 'ARMATURE']
+    if armatures and "Jaw" in armatures[0].pose.bones:
+        jaw = armatures[0].pose.bones["Jaw"]
+        jaw.rotation_mode = 'XYZ'
+        openness = {"A":1.0,"B":0.72,"C":0.55,"D":0.68,"E":0.45,"F":0.30,
+                    "G":0.50,"H":0.40,"X":0.05}
+        for cue in cues:
+            amount = openness.get(cue.get("value","X"), 0.05)
+            start = max(1, round(float(cue["start"]) * fps) + 1)
+            end = max(start, round(float(cue["end"]) * fps) + 1)
+            jaw.rotation_euler[0] = math.radians(-11.0 * amount)
+            jaw.keyframe_insert(data_path="rotation_euler", frame=start)
+            jaw.keyframe_insert(data_path="rotation_euler", frame=end)
+        print("[FACE] REAL_AUDIO: bounded jaw motion keyed from Rhubarb cues")
 
     armatures = [obj for obj in bpy.context.scene.objects if obj.type == 'ARMATURE']
     if armatures and "Head" in armatures[0].pose.bones:
