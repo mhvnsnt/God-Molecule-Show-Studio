@@ -1,9 +1,9 @@
 {
   "bridge": "god-molecule-trippedd",
-  "version": 4,
+  "version": 5,
   "source_repo": "mhvnsnt/God-Molecule-Show-Studio",
   "target_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
-  "source_head": "cb27207fe1606605f6e766bbed4a35f5a3815a1a",
+  "source_head": "c18c5e581000b80a644ae08fb1a9b65a652a19a0",
   "god_molecule_oral_gate_commit": "7b79df179ddfa0c02ed196dd2c4b3ad51d80f6f2",
   "god_molecule_rhubarb_commit": "532aa45f111a805528e80b7d2657688ba155069c",
   "god_molecule_evidence_contract": "157ae0166c1eb15f448a9b6921968310a17f2462",
@@ -32,7 +32,7 @@
     "trippedd": "artifacts/evidence/god_molecule/"
   },
   "roles": {
-    "god_molecule_show_studio": "character/creative execution laboratory \u2014 oral, Rhubarb, evidence frames, performance",
+    "god_molecule_show_studio": "character/creative execution laboratory — oral, Rhubarb, evidence frames, performance",
     "trippedd_production_studios": "orchestration, provenance, QC gates, episode packaging, environment/USD, delivery"
   },
   "canon_docs": {
@@ -43,7 +43,7 @@
   },
   "trippedd_ep01_pack_commits_note": "EP01 COLD_OPEN/SCENE_MAP/SC01-SC04/TONNO specs + GM-WORLD-0001.usda on TRIPPEDD main; subordinate to Show Bible",
   "grok_oral_survey_commit": "1a1549c04170997079f92573d8c8d29a0ae6e6",
-  "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS \u2260 available until install+execute+artifact+provenance.",
+  "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS ≠ available until install+execute+artifact+provenance.",
   "trippedd_oral_runner_commit": "d031c395571391d5d6a1e9ba1dce8194fd09b25b",
   "bridge_sync_note": "Bridge refreshed after God-Molecule-Show-Studio main advances. TRIPPEDD executable oral path is the single production implementation; God repo remains the character/creative laboratory.",
   "trippedd_gate_tools": {
@@ -67,6 +67,12 @@
     "anatomy": "explicit teeth_mask and gums_mask as renderable objects + sock/tongue",
     "solidify": "inward offset=-1",
     "survey": "CLI --output; shell hits excluded from aperture denominator/protrusion gate",
-    "visual_pass_requires": "REST OPEN PROFILE FRONT evidence + human review \u2014 code PASS is not visual PASS"
-  }
+    "visual_pass_requires": "REST OPEN PROFILE FRONT evidence + human review — code PASS is not visual PASS"
+  },
+  "shared_character_tools": {
+    "oral_bridge": "ad29c9cacc5b4b3905fd66e9210618d3ed157242",
+    "aperture_survey": "84636878018ce94bcf7637ae1285301377d1f460",
+    "gnm_oral_donor": "c18c5e581000b80a644ae08fb1a9b65a652a19a0"
+  },
+  "notes": "God Molecule lab and TRIPPEDD production use the same executable character/oral implementation; no third oral stack."
 }
