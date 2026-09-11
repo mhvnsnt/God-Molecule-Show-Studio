@@ -14,17 +14,19 @@ def build_animation_slice(asset_path, rhubarb_json):
 
     if not os.path.isfile(asset_path):
         return {"status": "BLOCKED", "reason": "Canonical asset missing", "logs": logs}
-
     if not os.path.isfile(rhubarb_json):
         return {"status": "BLOCKED", "reason": "REAL_AUDIO_REQUIRED: Rhubarb JSON missing", "logs": logs}
 
-    logs.append("[AUDIO] Rhubarb cue file supplied; no transcript is invented.")
-    logs.append("[FACE] Source mode: AUDIO")
+    logs += [
+        "[AUDIO] Rhubarb cue file supplied; no transcript is invented.",
+        "[FACE] Source mode: AUDIO",
+    ]
 
     root = os.path.dirname(asset_path)
     proxy_path = asset_path.replace(".glb", "_proxy.glb")
     rig_path = proxy_path.replace(".glb", "_rigged.glb")
     frames_dir = os.path.join(root, "frames")
+    evidence_dir = os.path.join(root, "visual_evidence")
     os.makedirs(frames_dir, exist_ok=True)
 
     proxy_script = os.path.join(os.path.dirname(__file__), "proxy_generator.py")
@@ -46,10 +48,17 @@ def build_animation_slice(asset_path, rhubarb_json):
         return {"status": "BLOCKED", "reason": "REAL_RENDER missing or animation failed", "logs": logs + [a.stdout[-4000:], a.stderr[-4000:]]}
     logs.append(f"[RENDER] REAL_RENDER: {len(frame_files)} PNG frames.")
 
+    evidence_script = os.path.join(os.path.dirname(__file__), "make_visual_evidence.py")
+    e = run(["python3", evidence_script, frames_dir, "--out", evidence_dir])
+    if e.returncode != 0 or not os.path.isfile(os.path.join(evidence_dir, "CONTACT-SHEET.png")):
+        return {"status": "BLOCKED", "reason": "VISUAL_EVIDENCE missing", "logs": logs + [e.stdout[-4000:], e.stderr[-4000:]]}
+    logs.append("[EVIDENCE] CONTACT-SHEET.png generated for human inspection.")
+
     return {
         "status": "SUCCESS",
         "sourceMode": "AUDIO",
         "frames": frame_files,
+        "visualEvidence": os.path.join(evidence_dir, "CONTACT-SHEET.png"),
         "logs": logs,
     }
 
