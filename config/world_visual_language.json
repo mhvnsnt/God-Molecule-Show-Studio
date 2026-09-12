@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trippedd.world-visual-language/v1",
+  "schema_version": "1.0.0",
+  "provenance": {
+    "authority": "God Molecule visual language",
+    "deterministic": true,
+    "world_seed": 742918,
+    "notes": "Single source for world color, starfield, atmosphere and transition state. Renderers and control planes must consume this document rather than duplicating palette constants."
+  },
+  "palette": {
+    "act_i_blue": "#4000FF",
+    "dark_cosmic": "#081052",
+    "mars_cobalt": "#1F5FFF",
+    "indigo": "#352080",
+    "violet": "#6A35D9",
+    "electric_purple": "#4000FF",
+    "cyan": "#31DFFF",
+    "magenta": "#D52CFF",
+    "eye_white": "#F8FBFF"
+  },
+  "starfield_profiles": {
+    "neutral_white": {
+      "star_density": 1.0,
+      "star_size": 1.0,
+      "white_ratio": 0.98,
+      "blue_ratio": 0.01,
+      "cyan_ratio": 0.005,
+      "violet_ratio": 0.004,
+      "magenta_ratio": 0.001,
+      "bloom": 0.12,
+      "contrast": 0.82,
+      "saturation": 0.08,
+      "exposure": 0.0,
+      "temperature": 0.0,
+      "background_haze": 0.03,
+      "nebula_density": 0.0,
+      "depth_falloff": 0.85
+    },
+    "mars_awakened": {
+      "star_density": 1.0,
+      "star_size": 1.08,
+      "white_ratio": 0.58,
+      "blue_ratio": 0.16,
+      "cyan_ratio": 0.10,
+      "violet_ratio": 0.10,
+      "magenta_ratio": 0.06,
+      "bloom": 0.28,
+      "contrast": 0.88,
+      "saturation": 0.42,
+      "exposure": 0.05,
+      "temperature": -0.08,
+      "background_haze": 0.10,
+      "nebula_density": 0.05,
+      "depth_falloff": 0.82
+    },
+    "cosmic_blue": {
+      "star_density": 1.0,
+      "star_size": 1.04,
+      "white_ratio": 0.66,
+      "blue_ratio": 0.22,
+      "cyan_ratio": 0.10,
+      "violet_ratio": 0.02,
+      "magenta_ratio": 0.0,
+      "bloom": 0.22,
+      "contrast": 0.86,
+      "saturation": 0.32,
+      "exposure": 0.02,
+      "temperature": -0.14,
+      "background_haze": 0.07,
+      "nebula_density": 0.02,
+      "depth_falloff": 0.84
+    },
+    "violet_dream": {
+      "star_density": 1.0,
+      "star_size": 1.12,
+      "white_ratio": 0.42,
+      "blue_ratio": 0.14,
+      "cyan_ratio": 0.08,
+      "violet_ratio": 0.24,
+      "magenta_ratio": 0.12,
+      "bloom": 0.34,
+      "contrast": 0.9,
+      "saturation": 0.62,
+      "exposure": 0.08,
+      "temperature": 0.04,
+      "background_haze": 0.16,
+      "nebula_density": 0.10,
+      "depth_falloff": 0.78
+    },
+    "psychedelic": {
+      "star_density": 1.05,
+      "star_size": 1.2,
+      "white_ratio": 0.25,
+      "blue_ratio": 0.16,
+      "cyan_ratio": 0.15,
+      "violet_ratio": 0.20,
+      "magenta_ratio": 0.24,
+      "bloom": 0.48,
+      "contrast": 0.94,
+      "saturation": 0.88,
+      "exposure": 0.12,
+      "temperature": 0.0,
+      "background_haze": 0.24,
+      "nebula_density": 0.18,
+      "depth_falloff": 0.72
+    },
+    "reality_break": {
+      "star_density": 0.92,
+      "star_size": 1.3,
+      "white_ratio": 0.18,
+      "blue_ratio": 0.12,
+      "cyan_ratio": 0.18,
+      "violet_ratio": 0.20,
+      "magenta_ratio": 0.32,
+      "bloom": 0.62,
+      "contrast": 1.0,
+      "saturation": 1.0,
+      "exposure": 0.16,
+      "temperature": 0.0,
+      "background_haze": 0.34,
+      "nebula_density": 0.28,
+      "depth_falloff": 0.68
+    },
+    "world_transition": {
+      "star_density": 0.72,
+      "star_size": 1.45,
+      "white_ratio": 0.08,
+      "blue_ratio": 0.08,
+      "cyan_ratio": 0.12,
+      "violet_ratio": 0.28,
+      "magenta_ratio": 0.44,
+      "bloom": 0.72,
+      "contrast": 1.02,
+      "saturation": 1.0,
+      "exposure": 0.2,
+      "temperature": 0.02,
+      "background_haze": 0.44,
+      "nebula_density": 0.40,
+      "depth_falloff": 0.62
+    }
+  },
+  "events": {
+    "MARS_EYE_CONTACT": {
+      "description": "Direct eye contact is the narrative trigger for the universe becoming visibly aware.",
+      "drives": ["starfield", "bloom", "saturation", "atmospheric_haze", "environment_illumination", "transition_intensity", "compositing"]
+    }
+  },
+  "presets": {
+    "EP01_MARS_AWARENESS": {
+      "fps": 24,
+      "resolution": [1280, 720],
+      "duration_seconds": 12,
+      "world_seed": 742918,
+      "timeline": [
+        {"t": 0.00, "profile": "neutral_white", "event": null},
+        {"t": 0.25, "profile": "neutral_white", "event": null},
+        {"t": 0.40, "profile": "cosmic_blue", "event": null},
+        {"t": 0.55, "profile": "mars_awakened", "event": "MARS_EYE_CONTACT"},
+        {"t": 0.70, "profile": "violet_dream", "event": null},
+        {"t": 0.85, "profile": "world_transition", "event": null},
+        {"t": 1.00, "profile": "world_transition", "event": null}
+      ],
+      "beats": [
+        "mars_look_left",
+        "mars_look_away",
+        "mars_look_right",
+        "mars_face_camera",
+        "mars_departure",
+        "purple_geometry_transition",
+        "world_reveal"
+      ]
+    }
+  }
+}
