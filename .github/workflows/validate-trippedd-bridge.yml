@@ -43,6 +43,16 @@ jobs:
           assert local["identity"] == "MARS_CANONICAL"
           assert bridge["identity_rule"].startswith("MARS_CANONICAL immutable")
           assert bridge["operating_model"]["shared_runtime"] == "TRIPPEDD tools/character is the single production implementation"
+          assert bridge["promotion_order"][:8] == [
+              "mars_lod2_input_preflight",
+              "mvmp_478_landmarks",
+              "semantic_eyelids",
+              "eye_sockets",
+              "face_rig",
+              "actual_blink",
+              "actual_png_evidence",
+              "brow_eyelid_measurements",
+          ]
 
           # Snapshot heads are synchronization records, not a requirement that the
           # source repositories stop moving. Confirm both pinned commits still exist.
@@ -50,6 +60,7 @@ jobs:
           get(f"https://api.github.com/repos/{bridge['target_repo']}/commits/{bridge['target_head']}")
 
           required = [
+              "tools/character/validate_mars_lod2_input.py",
               "tools/character/build_mars_oral_bridge.py",
               "tools/character/survey_oral_aperture.py",
               "tools/character/assemble_human_review_package.py",
@@ -65,5 +76,6 @@ jobs:
 
           print(f"Bridge contract PASS: source main={source}, target main={target}")
           print(f"Pinned sync: {bridge['source_head']} -> {bridge['target_head']}")
+          print("MARS_LOD2 preflight is fail-closed; no substitute asset may be promoted.")
           print("MARS_CANONICAL immutable; TRIPPEDD character tools remain the single production implementation.")
           PY
