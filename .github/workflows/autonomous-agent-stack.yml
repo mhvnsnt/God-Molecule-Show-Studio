@@ -1,0 +1,20 @@
+name: autonomous-agent-stack
+on:
+  push:
+    paths:
+      - "ops/autonomous-studio/**"
+      - "tools/character/**"
+  pull_request:
+    paths:
+      - "ops/autonomous-studio/**"
+      - "tools/character/**"
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Syntax check
+        run: python -m py_compile ops/autonomous-studio/studio_mcp_server.py ops/autonomous-studio/agent_graph.py
