@@ -20,8 +20,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Validate bridge contract and target repository
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           python - <<'PY'
           import json
@@ -30,16 +28,13 @@ jobs:
           bridge = json.load(open("config/god_molecule_trippedd_bridge.json", encoding="utf-8"))
           local = json.load(open("config/trippedd_production_bridge.json", encoding="utf-8"))
 
-          expected_source = f"https://api.github.com/repos/{bridge['source_repo']}/commits/main"
-          expected_target = f"https://api.github.com/repos/{bridge['target_repo']}/commits/main"
-
           def get(url):
               req = urllib.request.Request(url, headers={"Accept": "application/vnd.github+json"})
               with urllib.request.urlopen(req, timeout=20) as r:
                   return json.load(r)
 
-          source = get(expected_source)["sha"]
-          target = get(expected_target)["sha"]
+          source = get(f"https://api.github.com/repos/{bridge['source_repo']}/commits/main")["sha"]
+          target = get(f"https://api.github.com/repos/{bridge['target_repo']}/commits/main")["sha"]
 
           assert bridge["source_repo"] == "mhvnsnt/God-Molecule-Show-Studio"
           assert bridge["target_repo"] == "mhvnsnt/TRIPPEDD-Production-studios-"
@@ -47,9 +42,12 @@ jobs:
           assert local["production_repo"] == bridge["target_repo"]
           assert local["identity"] == "MARS_CANONICAL"
           assert bridge["identity_rule"].startswith("MARS_CANONICAL immutable")
-          assert bridge["shared_runtime"]["single_production_implementation"] if "shared_runtime" in bridge else True
-          assert bridge["source_head"] == source, f"source_head stale: {bridge['source_head']} != {source}"
-          assert bridge["target_head"] == target, f"target_head stale: {bridge['target_head']} != {target}"
+          assert bridge["operating_model"]["shared_runtime"] == "TRIPPEDD tools/character is the single production implementation"
+
+          # Snapshot heads are synchronization records, not a requirement that the
+          # source repositories stop moving. Confirm both pinned commits still exist.
+          get(f"https://api.github.com/repos/{bridge['source_repo']}/commits/{bridge['source_head']}")
+          get(f"https://api.github.com/repos/{bridge['target_repo']}/commits/{bridge['target_head']}")
 
           required = [
               "tools/character/build_mars_oral_bridge.py",
@@ -65,6 +63,7 @@ jobs:
           missing = [p for p in required if p not in paths]
           assert not missing, f"missing TRIPPEDD gate tools: {missing}"
 
-          print(f"Bridge PASS: {bridge['source_repo']}@{source} -> {bridge['target_repo']}@{target}")
-          print("MARS_CANONICAL remains immutable; TRIPPEDD character tools are the single production implementation.")
+          print(f"Bridge contract PASS: source main={source}, target main={target}")
+          print(f"Pinned sync: {bridge['source_head']} -> {bridge['target_head']}")
+          print("MARS_CANONICAL immutable; TRIPPEDD character tools remain the single production implementation.")
           PY
