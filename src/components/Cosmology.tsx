@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ZoomIn, ZoomOut, Infinity as InfinityIcon } from 'lucide-react';

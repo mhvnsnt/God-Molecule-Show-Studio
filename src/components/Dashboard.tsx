@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { mockEpisode } from '../data';
 import { ProductionState, Shot } from '../types';

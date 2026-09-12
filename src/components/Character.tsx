@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Database, UploadCloud, CheckCircle2, AlertCircle, Loader2, Link } from 'lucide-react';

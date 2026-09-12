@@ -6,3 +6,13 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Next.js
+.next/
+next-env.d.ts
+*.tsbuildinfo
+
+# The raw Drive pull is 62 MB and re-fetchable by its file id; it is the only
+# thing here that is never committed. Everything else under .trippedd_assets/
+# -- proxies, renders, QC frames -- is EVIDENCE and stays tracked.
+.trippedd_assets/mars_source_*.glb

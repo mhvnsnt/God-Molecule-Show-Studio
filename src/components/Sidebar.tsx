@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { AppView } from '../types';
 import { Book, Film, LayoutDashboard, User, Globe, Clock, Orbit, PanelLeftClose, PanelLeftOpen } from 'lucide-react';

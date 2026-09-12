@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
-import { AppView } from './types';
-import { Sidebar } from './components/Sidebar';
-import { Dashboard } from './components/Dashboard';
-import { ShowBible } from './components/ShowBible';
-import { Cosmology } from './components/Cosmology';
-import { CharacterView } from './components/Character';
+'use client';
+
+import { useState } from 'react';
+import { AppView } from '@/src/types';
+import { Sidebar } from '@/src/components/Sidebar';
+import { Dashboard } from '@/src/components/Dashboard';
+import { ShowBible } from '@/src/components/ShowBible';
+import { Cosmology } from '@/src/components/Cosmology';
+import { CharacterView } from '@/src/components/Character';
 import { FileCode2 } from 'lucide-react';
 
-export default function App() {
+export default function Page() {
   const [currentView, setCurrentView] = useState<AppView>('preview');
 
   return (
     <div className="flex h-screen w-full bg-black overflow-hidden font-sans selection:bg-cyan-900 selection:text-cyan-50">
       <Sidebar currentView={currentView} onViewChange={setCurrentView} />
-      
+
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {currentView === 'preview' && <Dashboard />}
         {currentView === 'bible' && <ShowBible />}
         {currentView === 'cosmology' && <Cosmology />}
         {currentView === 'character' && <CharacterView />}
-        
+
         {/* Placeholders for other views */}
         {['episode-builder', 'scene-builder', 'world-builder', 'timeline'].includes(currentView) && (
           <div className="flex-1 bg-zinc-950 flex flex-col items-center justify-center text-zinc-500">
