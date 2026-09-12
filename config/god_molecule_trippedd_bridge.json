@@ -1,10 +1,10 @@
 {
   "bridge": "god-molecule-trippedd",
-  "version": 6,
+  "version": 7,
   "source_repo": "mhvnsnt/God-Molecule-Show-Studio",
   "target_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
-  "source_head": "570509771361ab82aa80cb9ba671b4536382aee5",
-  "target_head": "616bc73cef93fc37ea235c4565b435494f083240",
+  "source_head": "787445daa62ef1f4313011c0aa7f7fc256f09079",
+  "target_head": "c7d98ee25827b3787c3c19475ef25a4f830259a8",
   "god_molecule_oral_gate_commit": "7b79df179ddfa0c02ed196dd2c4b3ad51d80f6f2",
   "god_molecule_rhubarb_commit": "532aa45f111a805528e80b7d2657688ba155069c",
   "god_molecule_evidence_contract": "157ae0166c1eb15f448a9b6921968310a17f2462",
@@ -12,6 +12,14 @@
   "trippedd_runtime_bridge_commit": "60e3bc2a3521ee41f0dc0d419032b3535a22258",
   "identity_rule": "MARS_CANONICAL immutable; derived facial/oral assets only",
   "promotion_order": [
+    "mars_lod2_input_preflight",
+    "mvmp_478_landmarks",
+    "semantic_eyelids",
+    "eye_sockets",
+    "face_rig",
+    "actual_blink",
+    "actual_png_evidence",
+    "brow_eyelid_measurements",
     "oral_placement_gate",
     "aperture_survey",
     "human_review_evidence",
@@ -33,7 +41,7 @@
     "trippedd": "artifacts/evidence/god_molecule/"
   },
   "roles": {
-    "god_molecule_show_studio": "character/creative execution laboratory — oral, Rhubarb, evidence frames, performance",
+    "god_molecule_show_studio": "character/creative execution laboratory — oral, eyelid placement, face rig, Rhubarb, evidence frames, performance",
     "trippedd_production_studios": "orchestration, provenance, QC gates, episode packaging, environment/USD, delivery"
   },
   "canon_docs": {
@@ -46,8 +54,9 @@
   "grok_oral_survey_commit": "1a1549c04170997079f92573d8c8d29a0ae6e6",
   "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS ≠ available until install+execute+artifact+provenance.",
   "trippedd_oral_runner_commit": "d031c395571391d5d6a1e9ba1dce8194fd09b25b",
-  "bridge_sync_note": "Bridge refreshed against the current main heads. God-Molecule-Show-Studio is the character/creative authority; TRIPPEDD is the executable production, evidence, QC, provenance, and delivery authority. Cross-repo changes must preserve MARS_CANONICAL and the single oral implementation.",
+  "bridge_sync_note": "Bridge refreshed to carry the human-marked MARS_LOD2 placement constraints while failing closed until the actual production GLB is present. God-Molecule-Show-Studio remains character/creative authority; TRIPPEDD remains executable production, evidence, QC, provenance, and delivery authority.",
   "trippedd_gate_tools": {
+    "mars_lod2_input_preflight": "tools/character/validate_mars_lod2_input.py",
     "oral_placement_gate": "tools/character/build_mars_oral_bridge.py",
     "aperture_survey": "tools/character/survey_oral_aperture.py",
     "human_review_evidence": "tools/character/assemble_human_review_package.py",
@@ -61,7 +70,8 @@
   "shared_character_tools": {
     "oral_bridge": "ad29c9cacc5b4b3905fd66e9210618d3ed157242",
     "aperture_survey": "84636878018ce94bcf7637ae1285301377d1f460",
-    "gnm_oral_donor": "c18c5e581000b80a644ae08fb1a9b65a652a19a0"
+    "gnm_oral_donor": "c18c5e581000b80a644ae08fb1a9b65a652a19a0",
+    "mars_lod2_preflight": "c7d98ee25827b3787c3c19475ef25a4f830259a8"
   },
   "operating_model": {
     "canon_direction": "god_molecule_to_trippedd",
@@ -70,5 +80,5 @@
     "promotion": "God Molecule produces candidate character assets and evidence; TRIPPEDD promotes only after executable gates and human-visible evidence",
     "no_direct_canon_rewrite": true
   },
-  "notes": "God Molecule lab and TRIPPEDD production use the same executable character/oral implementation; no third oral stack. This file is the cross-repository source-of-truth for the bridge contract."
+  "notes": "God Molecule lab and TRIPPEDD production use the same executable character/oral implementation; no third oral stack. The MARS_LOD2 placement plates are constraints, not canonical mesh data. The actual MARS_LOD2.glb must exist before MVMP-478 landmarks, sockets, rig, blink, or PNG evidence may PASS. This file is the cross-repository source-of-truth for the bridge contract."
 }
