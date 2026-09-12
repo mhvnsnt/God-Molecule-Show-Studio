@@ -1,0 +1,65 @@
+services:
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    env_file: .env
+    volumes:
+      - ./litellm.config.yaml:/app/config.yaml:ro
+    ports: ["4000:4000"]
+
+  character-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile.mcp
+    env_file: .env
+    environment:
+      STUDIO_ROOT: /workspace
+    volumes:
+      - ../../:/workspace
+    ports: ["8000:8000"]
+
+  openhands:
+    image: docker.openhands.dev/openhands/openhands:latest
+    environment:
+      AGENT_SERVER_IMAGE_REPOSITORY: ghcr.io/openhands/agent-server
+      AGENT_SERVER_IMAGE_TAG: latest-python
+      SANDBOX_VOLUMES: ../../:/workspace:rw
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - openhands-data:/root/.openhands
+    ports: ["3000:3000"]
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    env_file: .env
+    volumes: ["agent-artifacts:/data"]
+    ports: ["9000:9000","9001:9001"]
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: god_molecule_agents
+      POSTGRES_USER: studio
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes: ["agent-db:/var/lib/postgresql/data"]
+    ports: ["5432:5432"]
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_DATABASE: god_molecule_agents
+      DB_POSTGRESDB_USER: studio
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+    depends_on: [postgres]
+    volumes: ["n8n-data:/home/node/.n8n"]
+    ports: ["5678:5678"]
+
+volumes:
+  agent-artifacts:
+  agent-db:
+  n8n-data:
+  openhands-data:
