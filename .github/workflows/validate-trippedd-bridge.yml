@@ -61,6 +61,8 @@ jobs:
 
           required = [
               "tools/character/validate_mars_lod2_input.py",
+              "tools/character/measure_eyelids_semantic.py",
+              "tools/character/validate_mars_oral_centerline.py",
               "tools/character/build_mars_oral_bridge.py",
               "tools/character/survey_oral_aperture.py",
               "tools/character/assemble_human_review_package.py",
