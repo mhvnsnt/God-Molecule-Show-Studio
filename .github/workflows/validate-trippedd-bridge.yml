@@ -1,0 +1,70 @@
+name: validate-trippedd-bridge
+
+on:
+  push:
+    paths:
+      - "config/god_molecule_trippedd_bridge.json"
+      - "config/trippedd_production_bridge.json"
+      - ".github/workflows/validate-trippedd-bridge.yml"
+  pull_request:
+    paths:
+      - "config/god_molecule_trippedd_bridge.json"
+      - "config/trippedd_production_bridge.json"
+      - ".github/workflows/validate-trippedd-bridge.yml"
+  workflow_dispatch:
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate bridge contract and target repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json
+          import urllib.request
+
+          bridge = json.load(open("config/god_molecule_trippedd_bridge.json", encoding="utf-8"))
+          local = json.load(open("config/trippedd_production_bridge.json", encoding="utf-8"))
+
+          expected_source = f"https://api.github.com/repos/{bridge['source_repo']}/commits/main"
+          expected_target = f"https://api.github.com/repos/{bridge['target_repo']}/commits/main"
+
+          def get(url):
+              req = urllib.request.Request(url, headers={"Accept": "application/vnd.github+json"})
+              with urllib.request.urlopen(req, timeout=20) as r:
+                  return json.load(r)
+
+          source = get(expected_source)["sha"]
+          target = get(expected_target)["sha"]
+
+          assert bridge["source_repo"] == "mhvnsnt/God-Molecule-Show-Studio"
+          assert bridge["target_repo"] == "mhvnsnt/TRIPPEDD-Production-studios-"
+          assert local["show_repo"] == bridge["source_repo"]
+          assert local["production_repo"] == bridge["target_repo"]
+          assert local["identity"] == "MARS_CANONICAL"
+          assert bridge["identity_rule"].startswith("MARS_CANONICAL immutable")
+          assert bridge["shared_runtime"]["single_production_implementation"] if "shared_runtime" in bridge else True
+          assert bridge["source_head"] == source, f"source_head stale: {bridge['source_head']} != {source}"
+          assert bridge["target_head"] == target, f"target_head stale: {bridge['target_head']} != {target}"
+
+          required = [
+              "tools/character/build_mars_oral_bridge.py",
+              "tools/character/survey_oral_aperture.py",
+              "tools/character/assemble_human_review_package.py",
+              "tools/character/measure_jaw_separation.py",
+              "tools/animation/validate_rhubarb_json.py",
+              "tools/character/validate_expression_blink_package.py",
+              "tools/animation/validate_performance_render.py",
+          ]
+          tree = get(f"https://api.github.com/repos/{bridge['target_repo']}/git/trees/{target}?recursive=1")["tree"]
+          paths = {x["path"] for x in tree}
+          missing = [p for p in required if p not in paths]
+          assert not missing, f"missing TRIPPEDD gate tools: {missing}"
+
+          print(f"Bridge PASS: {bridge['source_repo']}@{source} -> {bridge['target_repo']}@{target}")
+          print("MARS_CANONICAL remains immutable; TRIPPEDD character tools are the single production implementation.")
+          PY
