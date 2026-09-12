@@ -1,14 +1,15 @@
 {
   "bridge": "god-molecule-trippedd",
-  "version": 5,
+  "version": 6,
   "source_repo": "mhvnsnt/God-Molecule-Show-Studio",
   "target_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
-  "source_head": "c18c5e581000b80a644ae08fb1a9b65a652a19a0",
+  "source_head": "570509771361ab82aa80cb9ba671b4536382aee5",
+  "target_head": "616bc73cef93fc37ea235c4565b435494f083240",
   "god_molecule_oral_gate_commit": "7b79df179ddfa0c02ed196dd2c4b3ad51d80f6f2",
   "god_molecule_rhubarb_commit": "532aa45f111a805528e80b7d2657688ba155069c",
   "god_molecule_evidence_contract": "157ae0166c1eb15f448a9b6921968310a17f2462",
   "trippedd_oral_bridge_commit": "60e21a38c1fa9fcc8458a41c2675d06b5bb43880",
-  "trippedd_runtime_bridge_commit": "60e3bc2a3521ee41f0dc0d419032b3535a22258d",
+  "trippedd_runtime_bridge_commit": "60e3bc2a3521ee41f0dc0d419032b3535a22258",
   "identity_rule": "MARS_CANONICAL immutable; derived facial/oral assets only",
   "promotion_order": [
     "oral_placement_gate",
@@ -45,7 +46,7 @@
   "grok_oral_survey_commit": "1a1549c04170997079f92573d8c8d29a0ae6e6",
   "agreement": "Do not create a third oral system. Promote along promotion_order. Registered OSS ≠ available until install+execute+artifact+provenance.",
   "trippedd_oral_runner_commit": "d031c395571391d5d6a1e9ba1dce8194fd09b25b",
-  "bridge_sync_note": "Bridge refreshed after God-Molecule-Show-Studio main advances. TRIPPEDD executable oral path is the single production implementation; God repo remains the character/creative laboratory.",
+  "bridge_sync_note": "Bridge refreshed against the current main heads. God-Molecule-Show-Studio is the character/creative authority; TRIPPEDD is the executable production, evidence, QC, provenance, and delivery authority. Cross-repo changes must preserve MARS_CANONICAL and the single oral implementation.",
   "trippedd_gate_tools": {
     "oral_placement_gate": "tools/character/build_mars_oral_bridge.py",
     "aperture_survey": "tools/character/survey_oral_aperture.py",
@@ -57,22 +58,17 @@
     "seeded_environment": "tools/environment/run_first_creative_shot.sh",
     "gaussian_splat": "tools/environment/ply_to_particle_field.py"
   },
-  "target_head": "ece630df8efff4ebe18b07fb70da225e5f83f918",
-  "trippedd_oral_y_depth_commit": "60e21a38",
-  "trippedd_teeth_gums_commit": "bd764b38",
-  "trippedd_survey_shell_commit": "1a1549c0",
-  "trippedd_survey_cli_commit": "d031c395",
-  "oral_pipeline_notes": {
-    "lip_plane": "measured Y-depth axis (lip y ~= -0.21), not Z-facing fallback",
-    "anatomy": "explicit teeth_mask and gums_mask as renderable objects + sock/tongue",
-    "solidify": "inward offset=-1",
-    "survey": "CLI --output; shell hits excluded from aperture denominator/protrusion gate",
-    "visual_pass_requires": "REST OPEN PROFILE FRONT evidence + human review — code PASS is not visual PASS"
-  },
   "shared_character_tools": {
     "oral_bridge": "ad29c9cacc5b4b3905fd66e9210618d3ed157242",
     "aperture_survey": "84636878018ce94bcf7637ae1285301377d1f460",
     "gnm_oral_donor": "c18c5e581000b80a644ae08fb1a9b65a652a19a0"
   },
-  "notes": "God Molecule lab and TRIPPEDD production use the same executable character/oral implementation; no third oral stack."
+  "operating_model": {
+    "canon_direction": "god_molecule_to_trippedd",
+    "production_feedback": "trippedd_to_god_molecule_as_evidence_and_constraints",
+    "shared_runtime": "TRIPPEDD tools/character is the single production implementation",
+    "promotion": "God Molecule produces candidate character assets and evidence; TRIPPEDD promotes only after executable gates and human-visible evidence",
+    "no_direct_canon_rewrite": true
+  },
+  "notes": "God Molecule lab and TRIPPEDD production use the same executable character/oral implementation; no third oral stack. This file is the cross-repository source-of-truth for the bridge contract."
 }
