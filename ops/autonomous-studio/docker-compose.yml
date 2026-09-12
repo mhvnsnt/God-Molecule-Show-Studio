@@ -45,6 +45,40 @@ services:
     volumes: ["agent-db:/var/lib/postgresql/data"]
     ports: ["5432:5432"]
 
+  vision-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile.mcp
+    env_file: .env
+    environment:
+      STUDIO_ROOT: /workspace
+      EVIDENCE_DIR: artifacts/evidence
+    volumes:
+      - ../../:/workspace
+    ports: ["8001:8000"]
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    volumes:
+      - open-webui-data:/app/backend/data
+    ports: ["8080:8080"]
+
+  comfyui:
+    image: ghcr.io/ai-dock/comfyui:latest
+    volumes:
+      - comfyui-data:/opt/ComfyUI
+    ports: ["8188:8188"]
+
+  qwen3-vl:
+    image: vllm/vllm-openai:latest
+    profiles: ["gpu"]
+    command: ["--model","Qwen/Qwen3-VL-8B-Instruct","--trust-remote-code"]
+    environment:
+      HF_TOKEN: ${HF_TOKEN}
+    ports: ["8002:8000"]
+    volumes:
+      - hf-cache:/root/.cache/huggingface
+
   n8n:
     image: docker.n8n.io/n8nio/n8n:latest
     environment:
