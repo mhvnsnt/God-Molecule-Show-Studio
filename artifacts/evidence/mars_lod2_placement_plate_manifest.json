@@ -1,0 +1,93 @@
+{
+  "schema": "god-molecule.mars-lod2-placement-plate.v1",
+  "asset": {
+    "id": "MARS_LOD2",
+    "required_path": "assets/source_models/MARS_LOD2.glb",
+    "status": "BLOCKED_MISSING_FROM_GITHUB_CHECKOUT",
+    "substitution_allowed": false,
+    "authority": "MARS_CANONICAL"
+  },
+  "plate": {
+    "purpose": "Human-marked placement reference for semantic eyelids, eye sockets, brow/eyelid measurements, and clipping limits.",
+    "annotation_is_ground_truth": false,
+    "annotation_role": "placement_constraint",
+    "capture_requirements": {
+      "measured_head_frame": true,
+      "speculars": false,
+      "clipping_gate": true
+    },
+    "images": [
+      {
+        "id": "front_close",
+        "source": "user_uploaded_current_turn",
+        "sha256": "291a42ba82d3bd2d94a84638ead374d2111dab74b5fdc7320b9597f0f071de75",
+        "width": 1600,
+        "height": 1600,
+        "channels": "RGBA",
+        "marks": {
+          "brows": [
+            {"bbox_px": [279, 250, 700, 359]},
+            {"bbox_px": [930, 247, 1288, 373]}
+          ],
+          "upper_lids": [
+            {"bbox_px": [365, 413, 660, 457]},
+            {"bbox_px": [958, 425, 1278, 459]}
+          ],
+          "lower_lids": [
+            {"bbox_px": [356, 437, 684, 517]},
+            {"bbox_px": [967, 448, 1259, 515]}
+          ],
+          "nostrils": [
+            {"bbox_px": [686, 854, 786, 883]},
+            {"bbox_px": [869, 856, 977, 900]}
+          ]
+        }
+      },
+      {
+        "id": "front_wide",
+        "source": "user_uploaded_current_turn",
+        "sha256": "e893a4fbb3ed1f084ae1fa6a11b0cfa2b4040d4d1917b9a742893d6de4ea8284",
+        "width": 1600,
+        "height": 1600,
+        "channels": "RGBA",
+        "marks": {
+          "brows": [
+            {"bbox_px": [420, 607, 685, 732]},
+            {"bbox_px": [855, 588, 1095, 652]}
+          ],
+          "upper_lids": [
+            {"bbox_px": [477, 725, 675, 772]},
+            {"bbox_px": [872, 704, 1070, 750]}
+          ],
+          "lower_lids": [
+            {"bbox_px": [481, 764, 671, 785]},
+            {"bbox_px": [881, 741, 1075, 777]}
+          ],
+          "nostrils": [
+            {"bbox_px": [683, 879, 750, 931]},
+            {"bbox_px": [792, 875, 869, 921]}
+          ]
+        }
+      }
+    ]
+  },
+  "promotion": {
+    "next": "real_MARS_LOD2_GLb_input",
+    "then": [
+      "MVMP_478_landmarks",
+      "semantic_eyelid_assignment",
+      "eye_socket_cut",
+      "face_rig",
+      "actual_blink",
+      "actual_PNG_evidence",
+      "brow_eyelid_measurements",
+      "PASS_FAIL"
+    ],
+    "fail_closed": true
+  },
+  "notes": [
+    "These plates constrain placement; they do not replace the canonical GLB.",
+    "Do not promote donor geometry, painted texture, or a generic head as MARS_LOD2.",
+    "The actual production asset must be present before landmark, socket, rig, blink, or PNG gates can truthfully PASS."
+  ]
+}
