@@ -120,6 +120,23 @@ export function ShowBible() {
              "Is Mars containing everything, or is something containing Mars?"
            </blockquote>
         </Section>
+        <Section title="God Molecule 3D World / Gaussian Splat Theme">
+          <p>
+            Reality can be rendered as a navigable radiance-field substrate: scanned or reconstructed spaces become Gaussian-splat worlds that can coexist with conventional Blender geometry, the real Mars character, procedural molecular structures, particles, lighting and effects.
+          </p>
+          <p>
+            This is a background visual grammar for Mars's consciousness, not a replacement for the story bible or canonical character. Worlds may transform radically while Mars's identity remains stable.
+          </p>
+          <div className="bg-zinc-900/50 p-6 rounded-lg border border-zinc-800 text-sm">
+            physical scene → radiance field → molecular/procedural layer → animation → cinematic render
+          </div>
+          <p>
+            The studio concept includes Layout, Modeling, Splatting, Shading, Animation, AI Director and Rendering workspaces, with viewport modes for wireframe, solid, material, splats, quantum and cinematic presentation. Camera, world, molecular and character tracks share a production timeline.
+          </p>
+          <p>
+            AI may propose worlds, analyze references, generate panoramic environments, direct shots, create temporary cinematic previews, score scenes and provide voice interfaces. Execution remains physical and evidence-backed: real artifacts, pixels, provenance, SHA-256 and receipts outrank UI claims.
+          </p>
+        </Section>
       </div>
     </div>
   );
@@ -129,7 +146,7 @@ function Section({ title, children }: { title: string, children: React.ReactNode
   return (
     <motion.section 
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 0, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       className="space-y-4"
     >
