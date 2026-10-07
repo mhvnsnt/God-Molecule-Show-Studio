@@ -14,7 +14,7 @@ Both replace the rejected stock-Piper approximation and the non-commercial Coqui
 
 ## Wizard-cast voice plan (owner-consented cloning only)
 1. Static → Enzo Amore likeness (first proof — `voice-clone-work/` already holds Enzo refs + cb_weights).
-2. Narrator → Bill $aber. 3. Cipher → Lio Rush. 4. Echo → Shotzi Blackheart. 5. Hollow → Super Dragon. 6. Sombra Negra → Damian Priest. 7. Kiko → Keiji Mutoh / Great Muta.
+2. Narrator → Bill $aber. 3. Cipher → Lio Rush's 2026 "Blackheart" (feral — zoned out, whisper-to-shriek, word-loops; owner lock 2026-10-07). 4. Echo → Shotzi Blackheart. 5. Hollow → Super Dragon. 6. Sombra Negra → Damian Priest. 7. Kiko → Keiji Mutoh / Great Muta.
 - Theory (Black 20-year-old NY woman, exact voice TBD) and Onyx (voice TBD): NO cloning until the owner approves a voice target. A character with no acceptable matched voice stays silent — never a placeholder.
 
 ## Owner-consent rule
