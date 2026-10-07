@@ -1,0 +1,56 @@
+{
+  "source": "hollow_crop_source.png (960x872, half-body bust)",
+  "method": "ROI x HSV color segmentation (Wave-4/5/6 recipe)",
+  "stack_bottom_to_top": [
+    "00_torso.png",
+    "01_face_base.png",
+    "02_eye_l.png",
+    "03_eye_r.png"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "rig_file": "00_torso.png",
+      "pixels": 276463,
+      "bbox_xyxy": [
+        0,
+        220,
+        690,
+        871
+      ]
+    },
+    {
+      "layer": "02_head",
+      "rig_file": "01_face_base.png",
+      "pixels": 83720,
+      "bbox_xyxy": [
+        60,
+        0,
+        552,
+        429
+      ]
+    },
+    {
+      "layer": "03_eye_L",
+      "rig_file": "02_eye_l.png",
+      "pixels": 1209,
+      "bbox_xyxy": [
+        147,
+        205,
+        215,
+        243
+      ]
+    },
+    {
+      "layer": "04_eye_R",
+      "rig_file": "03_eye_r.png",
+      "pixels": 1254,
+      "bbox_xyxy": [
+        275,
+        202,
+        337,
+        240
+      ]
+    }
+  ]
+}
