@@ -1,0 +1,75 @@
+{
+  "source": "echo_battle_crop_source.png (515x725)",
+  "method": "ROI x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: spray-can-raised pose; 3/4-body (rail occlusion); can is a scene prop layer; no mouth art (pipeline no-mouth path)",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_accessory",
+    "04_arm",
+    "05_spray_can",
+    "06_eyes"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 72754,
+      "bbox_xyxy": [
+        151,
+        35,
+        446,
+        630
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 25994,
+      "bbox_xyxy": [
+        200,
+        55,
+        364,
+        281
+      ]
+    },
+    {
+      "layer": "03_accessory",
+      "pixels": 3714,
+      "bbox_xyxy": [
+        176,
+        208,
+        351,
+        341
+      ]
+    },
+    {
+      "layer": "04_arm",
+      "pixels": 11684,
+      "bbox_xyxy": [
+        170,
+        214,
+        261,
+        491
+      ]
+    },
+    {
+      "layer": "05_spray_can",
+      "pixels": 3457,
+      "bbox_xyxy": [
+        168,
+        194,
+        215,
+        334
+      ]
+    },
+    {
+      "layer": "06_eyes",
+      "pixels": 399,
+      "bbox_xyxy": [
+        284,
+        112,
+        346,
+        131
+      ]
+    }
+  ]
+}
