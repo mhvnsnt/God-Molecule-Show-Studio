@@ -1,0 +1,92 @@
+{
+  "source": "cipher_crop_source.png (305x910)",
+  "method": "ROI x HSV color segmentation + Telea inpainting (Wave-4/5/6 recipe)",
+  "stack_bottom_to_top": [
+    "00_torso.png",
+    "01_face_base.png",
+    "02_arm_l.png",
+    "03_arm_r.png",
+    "04_accessory.png",
+    "05_eye_l.png",
+    "06_eye_r.png"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "rig_file": "00_torso.png",
+      "pixels": 133289,
+      "bbox_xyxy": [
+        0,
+        90,
+        304,
+        909
+      ]
+    },
+    {
+      "layer": "02_head",
+      "rig_file": "01_face_base.png",
+      "pixels": 27020,
+      "bbox_xyxy": [
+        60,
+        0,
+        249,
+        234
+      ]
+    },
+    {
+      "layer": "03_arm_L",
+      "rig_file": "02_arm_l.png",
+      "pixels": 13345,
+      "bbox_xyxy": [
+        0,
+        250,
+        151,
+        399
+      ]
+    },
+    {
+      "layer": "04_arm_R",
+      "rig_file": "03_arm_r.png",
+      "pixels": 15994,
+      "bbox_xyxy": [
+        152,
+        250,
+        304,
+        399
+      ]
+    },
+    {
+      "layer": "05_chain",
+      "rig_file": "04_accessory.png",
+      "pixels": 9118,
+      "bbox_xyxy": [
+        85,
+        150,
+        254,
+        329
+      ]
+    },
+    {
+      "layer": "06_eye_L",
+      "rig_file": "05_eye_l.png",
+      "pixels": 324,
+      "bbox_xyxy": [
+        109,
+        92,
+        134,
+        108
+      ]
+    },
+    {
+      "layer": "07_eye_R",
+      "rig_file": "06_eye_r.png",
+      "pixels": 310,
+      "bbox_xyxy": [
+        162,
+        87,
+        183,
+        105
+      ]
+    }
+  ]
+}
