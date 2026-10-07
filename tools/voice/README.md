@@ -41,7 +41,7 @@ Kokoro voices: `af_heart af_bella af_nicole af_sarah am_adam am_michael`
 ## License notes
 
 - Kokoro: Apache-2.0 — safe to prototype and ship.
-- Piper (`piper-tts`): **GPL-3.0** — runs as a separate local process, never
+- Piper (`piper-tts`): **GPL-3.0-or-later** — runs as a separate local process, never
   linked into shipping code. Stays quarantined per the program's
   `docs/LICENSE_QUARANTINE.md` until a license audit clears it (owner law).
   The pre-existing `voiceover.py` in the video_pipeline dirs uses it the same way.
