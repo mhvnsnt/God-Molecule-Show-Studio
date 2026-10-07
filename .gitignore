@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+# Wave-2: upstream reference clones (local only, not committed — see wiring docs)
+tools/voice/upstream/
+tools/animation/upstream/
