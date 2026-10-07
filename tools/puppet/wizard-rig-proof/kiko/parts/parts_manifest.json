@@ -1,0 +1,92 @@
+{
+  "source": "kiko_crop_source.png (1060x1945), from owner-approved kiko-tanaka-robed.webp",
+  "method": "ROI x HSV color segmentation + Telea inpainting (Wave-4 Ashes recipe, Wave-5 fixes)",
+  "stack_bottom_to_top": [
+    "00_torso.png",
+    "01_face_base.png",
+    "02_hair_side.png",
+    "03_hair_side.png",
+    "04_accessory.png",
+    "05_arm_l.png",
+    "06_arm_r.png"
+  ],
+  "layers": [
+    {
+      "layer": "01_body",
+      "rig_file": "00_torso.png",
+      "pixels": 886968,
+      "bbox_xyxy": [
+        118,
+        0,
+        942,
+        1944
+      ]
+    },
+    {
+      "layer": "02_head",
+      "rig_file": "01_face_base.png",
+      "pixels": 349005,
+      "bbox_xyxy": [
+        240,
+        0,
+        819,
+        659
+      ]
+    },
+    {
+      "layer": "03_drape_L",
+      "rig_file": "02_hair_side.png",
+      "pixels": 27622,
+      "bbox_xyxy": [
+        220,
+        550,
+        428,
+        1244
+      ]
+    },
+    {
+      "layer": "04_drape_R",
+      "rig_file": "03_hair_side.png",
+      "pixels": 34908,
+      "bbox_xyxy": [
+        630,
+        550,
+        839,
+        1294
+      ]
+    },
+    {
+      "layer": "05_chains",
+      "rig_file": "04_accessory.png",
+      "pixels": 14885,
+      "bbox_xyxy": [
+        354,
+        540,
+        691,
+        919
+      ]
+    },
+    {
+      "layer": "06_arm_L",
+      "rig_file": "05_arm_l.png",
+      "pixels": 12758,
+      "bbox_xyxy": [
+        153,
+        600,
+        219,
+        1188
+      ]
+    },
+    {
+      "layer": "07_arm_R",
+      "rig_file": "06_arm_r.png",
+      "pixels": 12223,
+      "bbox_xyxy": [
+        840,
+        600,
+        907,
+        1184
+      ]
+    }
+  ]
+}
