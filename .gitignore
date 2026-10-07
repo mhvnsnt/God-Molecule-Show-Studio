@@ -9,3 +9,9 @@ coverage/
 # Wave-2: upstream reference clones (local only, not committed — see wiring docs)
 tools/voice/upstream/
 tools/animation/upstream/
+
+# Wave-9: rig-build intermediates (regenerable via extract_parts.py; keep out of git)
+tools/puppet/wizard-rig-proof/**/parts/_*.npy
+tools/puppet/wizard-rig-proof/**/parts/_debug_*.png
+tools/puppet/wizard-rig-proof/**/parts/_chk*.png
+tools/puppet/wizard-rig-proof/**/__pycache__/
