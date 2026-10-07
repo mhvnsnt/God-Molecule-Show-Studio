@@ -1,0 +1,170 @@
+[
+  {
+    "id": "ParamEyeLOpen",
+    "min": 0.0,
+    "max": 1.0,
+    "default": 1.0,
+    "keyforms": 2
+  },
+  {
+    "id": "ParamEyeROpen",
+    "min": 0.0,
+    "max": 1.0,
+    "default": 1.0,
+    "keyforms": 2
+  },
+  {
+    "id": "ParamEyeLSmile",
+    "min": 0.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 2
+  },
+  {
+    "id": "ParamEyeRSmile",
+    "min": 0.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 2
+  },
+  {
+    "id": "ParamMouthOpenY",
+    "min": 0.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 2
+  },
+  {
+    "id": "ParamMouthForm",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamAngleX",
+    "min": -30.0,
+    "max": 30.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamAngleY",
+    "min": -30.0,
+    "max": 30.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamAngleZ",
+    "min": -30.0,
+    "max": 30.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairSide",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairSide2",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairSide3",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairSide4",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairSide5",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairSideV",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamAcc0",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamBodyAngleX",
+    "min": -10.0,
+    "max": 10.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamBodyAngleY",
+    "min": -10.0,
+    "max": 10.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamBodyAngleZ",
+    "min": -10.0,
+    "max": 10.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamArmLA",
+    "min": -10.0,
+    "max": 10.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamArmLB",
+    "min": -10.0,
+    "max": 10.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamArmRA",
+    "min": -10.0,
+    "max": 10.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamArmRB",
+    "min": -10.0,
+    "max": 10.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamBreath",
+    "min": 0.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 2
+  }
+]

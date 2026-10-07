@@ -1,0 +1,107 @@
+{
+  "source": "ashes_crop_source.png (400x864)",
+  "method": "ROI x HSV color segmentation + Telea inpainting",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_braid_L",
+    "04_braid_R",
+    "05_chain",
+    "06_arm_L",
+    "07_arm_R",
+    "08_eyes",
+    "09_grill"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 94036,
+      "bbox_xyxy": [
+        15,
+        270,
+        329,
+        863
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 45678,
+      "bbox_xyxy": [
+        50,
+        17,
+        327,
+        269
+      ]
+    },
+    {
+      "layer": "03_braid_L",
+      "pixels": 5317,
+      "bbox_xyxy": [
+        85,
+        170,
+        177,
+        399
+      ]
+    },
+    {
+      "layer": "04_braid_R",
+      "pixels": 2467,
+      "bbox_xyxy": [
+        222,
+        170,
+        299,
+        396
+      ]
+    },
+    {
+      "layer": "05_chain",
+      "pixels": 4062,
+      "bbox_xyxy": [
+        158,
+        225,
+        241,
+        344
+      ]
+    },
+    {
+      "layer": "06_arm_L",
+      "pixels": 28387,
+      "bbox_xyxy": [
+        15,
+        295,
+        207,
+        459
+      ]
+    },
+    {
+      "layer": "07_arm_R",
+      "pixels": 18206,
+      "bbox_xyxy": [
+        208,
+        295,
+        331,
+        459
+      ]
+    },
+    {
+      "layer": "08_eyes",
+      "pixels": 1332,
+      "bbox_xyxy": [
+        115,
+        95,
+        269,
+        141
+      ]
+    },
+    {
+      "layer": "09_grill",
+      "pixels": 1854,
+      "bbox_xyxy": [
+        115,
+        155,
+        263,
+        184
+      ]
+    }
+  ]
+}
