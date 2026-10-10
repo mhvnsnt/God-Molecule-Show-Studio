@@ -1,7 +1,7 @@
 # GOD MOLECULE — Bible Additions (Wave 2, Merge-Ready)
 
-**Status:** PROPOSED additions for the merge-into-one — owner approves each
-before it enters canon.
+**Status:** APPROVED — owner 2026-10-09 ("I give the ok on all of that").
+Folded into the unified bible draft at `docs/GOD-MOLECULE-UNIFIED-BIBLE.md`.
 **Wave:** Deep research wave 2 (owner 2026-10-09, standing directive).
 **Rule:** Bible A is immutable authority. Nothing below contradicts A; every
 addition is either A-compatible expansion or a KEEP-verdicted Bible B item
@@ -178,24 +178,24 @@ assignment) before the ritual — the Mirror-style mission brief.
 
 | # | Addition | Target | Verdict |
 |---|----------|--------|---------|
-| A-C1 | Episode skeleton | A/Canon | |
-| A-C2 | Four-land elemental taxonomy | A/Canon | |
-| A-C3 | Death mechanics | A/Canon | |
-| A-C4 | Nine-lives season arc | A/Canon | |
-| A-CH1 | Mars's voice | A/Characters | |
-| A-CH2 | Kevin's voice | A/Characters | |
-| A-CH3 | "Born with the words of duty" | A/Characters | |
-| A-E1 | Ritual grammar | A/Ep 1 Staging | |
-| A-E2 | Transition language | A/Ep 1 Staging | |
-| A-V1 | Deliberate-cheapness standard | A/Visual Bible | |
-| A-V2 | Music-first assembly | A/Visual Bible | |
-| A-V3 | The head reacts | A/Visual Bible | |
-| P1 | Voice-first pipeline | Production | |
-| P2 | Commissioning model | Production | |
-| P3 | Dream-journal writer role | Production | |
-| P4 | Guilt-free truncation | Production | |
-| I1 | Marshead Field Guide | Interstitial | |
-| I2 | Mission-parable cold open | Interstitial | |
+| A-C1 | Episode skeleton | A/Canon | APPROVED |
+| A-C2 | Four-land elemental taxonomy | A/Canon | APPROVED |
+| A-C3 | Death mechanics | A/Canon | APPROVED |
+| A-C4 | Nine-lives season arc | A/Canon | APPROVED |
+| A-CH1 | Mars's voice | A/Characters | APPROVED |
+| A-CH2 | Kevin's voice | A/Characters | APPROVED |
+| A-CH3 | "Born with the words of duty" | A/Characters | APPROVED |
+| A-E1 | Ritual grammar | A/Ep 1 Staging | APPROVED |
+| A-E2 | Transition language | A/Ep 1 Staging | APPROVED |
+| A-V1 | Deliberate-cheapness standard | A/Visual Bible | APPROVED |
+| A-V2 | Music-first assembly | A/Visual Bible | APPROVED |
+| A-V3 | The head reacts | A/Visual Bible | APPROVED |
+| P1 | Voice-first pipeline | Production | APPROVED |
+| P2 | Commissioning model | Production | APPROVED |
+| P3 | Dream-journal writer role | Production | APPROVED |
+| P4 | Guilt-free truncation | Production | APPROVED |
+| I1 | Marshead Field Guide | Interstitial | APPROVED |
+| I2 | Mission-parable cold open | Interstitial | APPROVED |
 
-*Nothing here is canon until the owner marks it. Bible A remains the
-immutable authority; these are proposed expansions in A's voice.*
+*All 18 items approved by the owner 2026-10-09 and folded into the unified bible draft.
+Bible A remains the immutable authority; these are expansions in A's voice.*
