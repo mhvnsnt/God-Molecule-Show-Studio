@@ -1,0 +1,12 @@
+venv/
+.tmp-pip/
+.apt-dl/
+__pycache__/
+*.pyc
+*.pkl
+*.pth.tar
+*.zip
+*.deb
+*.appimage
+squashfs-root/
+node_modules/
