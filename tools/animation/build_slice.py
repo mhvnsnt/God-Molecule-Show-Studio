@@ -36,13 +36,14 @@ def build_animation_slice(asset_path, rhubarb_json):
     logs.append("[PROXY] Generated; canonical source remains untouched.")
 
     rig_script = os.path.join(os.path.dirname(__file__), "rig_proxy.py")
-    r = run(["blender", "--background", "--python", rig_script, "--", proxy_path, rig_path])
+    # xvfb-run provides the GLX context Blender needs (EGL breaks on restarts)
+    r = run(["xvfb-run", "-a", "blender", "--background", "--python", rig_script, "--", proxy_path, rig_path])
     if not os.path.isfile(rig_path):
         return {"status": "BLOCKED", "reason": "Rig generation failed", "logs": logs + [r.stderr[-4000:]]}
     logs.append("[RIG] Rig package generated.")
 
     anim_script = os.path.join(os.path.dirname(__file__), "animate_rig.py")
-    a = run(["blender", "--background", "--python", anim_script, "--", rig_path, frames_dir, rhubarb_json])
+    a = run(["xvfb-run", "-a", "blender", "--background", "--python", anim_script, "--", rig_path, frames_dir, rhubarb_json])
     frame_files = sorted(glob.glob(os.path.join(frames_dir, "*.png")))
     if a.returncode != 0 or not frame_files:
         return {"status": "BLOCKED", "reason": "REAL_RENDER missing or animation failed", "logs": logs + [a.stdout[-4000:], a.stderr[-4000:]]}
