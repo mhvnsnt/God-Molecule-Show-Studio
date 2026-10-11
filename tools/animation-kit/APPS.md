@@ -4,9 +4,6 @@ Desktop + web **applications** that sit above the animation-kit pipeline
 tools (EbSynth, RIFE, cartoonize, etc.). Every tool here is **free and
 open-source** — no paid APIs, no cards, standing law.
 
-> Status note 2026-10-10: Penpot self-host is still PENDING (see below);
-> everything else is either cloned locally or installable on demand.
-
 ## 1. OpenCut — video editing (replaces CapCut)
 
 - **Local clone:** `~/workspace/video-fix-tools/opencut` (MIT)
@@ -21,17 +18,22 @@ open-source** — no paid APIs, no cards, standing law.
 - **Repo work it relates to:** TRIPPEDD commercials (Luck of the Irish,
   Green Iris, trippy cards), YouTube Shorts batches, font commercials
   (`font-wizard/pipeline/make_commercial.py` output), episode assembly.
+- **Phone:** ✅ opencut.app works in the phone browser today.
 
 ## 2. Penpot — design & layout (replaces Canva/Figma)
 
-- **Self-hosted URL:** PENDING — see blocker below.
-- **What it is:** open-source Canva/Figma alternative, self-hosted via
-  Docker Compose (frontend + backend + exporter + postgres + redis).
-- **Blocker (2026-10-10):** disk on this VM is at 86% with a hard ceiling
-  of 88% (owner popup at 90%). Docker + Penpot images need ~2.5–4GB, which
-  would breach the ceiling — deployment waits until the disk-space-guardian
-  frees backup-verified bulk. The dead-worker notes from the original
-  attempt are preserved in the `penpot-selfhost-and-appwire` checkpoint.
+- **Self-hosted:** `~/workspace/services/penpot/` — native deploy (no Docker;
+  Docker is unusable in this VM). Frontend serves on http://localhost:9001.
+- **Status 2026-10-11:** frontend serves (200 OK); backend jar runs but is
+  BLOCKED on a pgjdbc database-connection issue (driver fails SSL setup
+  without making TCP connections; root cause undetermined after extensive
+  debugging). Postgres 16 + Redis 7 + nginx all healthy. One-command
+  restart: `~/workspace/services/penpot/setup.sh` (survives VM replacement).
+  Full status in `~/workspace/services/penpot/README.md`.
+- **Phone:** once the backend is healthy, expose via
+  `cloudflared tunnel --url http://localhost:9001` and open the printed
+  `https://*.trycloudflare.com` URL on the phone. (Quick-tunnel URLs change
+  on every restart.)
 - **Replaces:** Canva/Figma for thumbnails, ID cards, specimen/sales
   sheets, key-art comps, promo layouts.
 - **Repo work it relates to:** TRIPPEDD network cards ("STAY TRIPPEDD",
@@ -50,6 +52,9 @@ open-source** — no paid APIs, no cards, standing law.
 - **Repo work it relates to:** hand-drawn 2D segments — In the Bushes
   (kid-drawing lo-fi style lock), TRIPPEDD interstitials (wavy trippy),
   2D character FX passes.
+- **Phone:** ❌ desktop-only. For phone sketching use FlipaClip itself
+  (free tier) or Krita's Android build; import the frames into the
+  desktop tools for cleanup.
 
 ## 4. Inkscape / GIMP / Krita — the graphics trio
 
@@ -63,10 +68,28 @@ open-source** — no paid APIs, no cards, standing law.
 - **Replaces:** Illustrator/Photoshop/Procreate for the whole network.
 - **Repo work it relates to:** EbSynth keyframe painting, font specimen
   sheets, trippy cards, thumbnails, key art.
+- **Phone:** ❌ desktop-only installs. **Photopea** (photopea.com, free in
+  browser, not open-source) covers quick raster edits from the phone
+  browser in a pinch.
+
+## Mobile access (owner: everything usable from phone)
+
+| Tool | Phone today? | How |
+|---|---|---|
+| Penpot | 🟡 once backend fixed | phone browser via cloudflared tunnel URL |
+| OpenCut | ✅ | opencut.app in phone browser |
+| Photopea | ✅ | photopea.com in phone browser (raster edits) |
+| Tahoma2D / OpenToonz | ❌ | desktop only |
+| Inkscape / GIMP / Krita | ❌ | desktop only (Krita has an Android build for sketching) |
+| Kdenlive | ❌ | desktop only |
+
+Rule: anything browser-based works on the phone today; desktop apps don't.
+When a lane needs phone-first, prefer the web tools (Penpot, OpenCut,
+Photopea) and keep desktop tools for heavy passes.
 
 ## Wiring (KIT WIRING LAW)
 
 Per the 2026-10-10 standing rule, every new media tool gets wired into
 Pocket Studio (`pocket-studio/server.py` + the Colab notebook) AND into the
 animation-kit in all production repos — no tool lives only in one
-conversation. When Penpot deploys, its URL lands here and in Pocket Studio.
+conversation.
