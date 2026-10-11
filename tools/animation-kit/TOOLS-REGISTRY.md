@@ -202,6 +202,41 @@ live footage
   └─ ffmpeg ──→ deflicker, hqdn3d, color-match, final assembly
 ```
 
+## 19. autocut — Triller-style auto-cut to music (NEW)
+`autocut/run_autocut.py --clips a.mp4 b.mp4 --music song.mp3 --output out.mp4 [--beats-per-cut 1|2|4] [--format vertical|landscape] [--max-dur 90]`
+librosa beat_track (verified: 112 BPM track, 110 beats/60s, 5s CPU) -> cut points every N beats -> clips cycled per segment from random offsets -> 1080x1920 (default) or 1280x720 -> concat -> music mux, faststart. Verified end-to-end: 336 beats -> 11 cuts, 12s vertical h264+aac, clean decode. Wrapped as pocket-studio tool 7.
+
+## 20. auto-editor — silence-based auto-cutting CLI (NEW)
+pip-installed into `venv/` (`venv/bin/python -m auto_editor`). Open source (WyattBlue/auto-editor).
+`venv/bin/python -m auto_editor INPUT.mp4 --edit audio --margin 0.2sec` — cuts silent sections. Verified: runs, produces trimmed mp4. Companion to autocut (silence cuts vs beat cuts). Notes in `auto-editor/README.md`.
+
+## 21. demucs — vocal/source separation (NEW, mega-toolkit Tier A)
+`venv/bin/python audio-sep/run_demucs.py --input mix.wav --outdir stems/ [--model htdemucs] [--stem vocals|drums|bass|other]`
+Meta's hybrid-transformer stem splitter (MIT). Splits a mix into vocals/drums/bass/other mp3s. Verified: 8s test clip -> all 4 stems, exit 0. CPU-slow (~3.5 min for 8s audio; ~1-2 min per audio minute) — big jobs belong on Colab GPU. Wrapped as pocket-studio "Separate stems". Serves: acapellas, dialogue isolation, remixes.
+
+## 22. aubio beats — fast beat/BPM detection (NEW, mega-toolkit Tier A)
+`venv/bin/python audio-sep/run_beats.py --input song.wav --outdir beats_out/`
+Lighter than librosa for quick jobs (librosa fallback built in). Outputs `beats.txt` (BPM + beat times) and `clicks.wav` (metronome track). Verified: 121 BPM detected on a 120 BPM ground-truth click track. Wrapped as pocket-studio "Find beats". Serves: beat-maps for editing, click tracks.
+
+## 23. paulstretch — extreme time-stretch sound design (NEW, mega-toolkit Tier A)
+`venv/bin/python audio-sep/run_stretch.py --input in.wav --output out.wav --stretch 8.0`
+The classic Paul Nasca algorithm (huge-window STFT, randomized phases): turns hits into ambient washes, risers, drones. Pure numpy/scipy. Verified: 8.0s -> 31.5s at 4x. Wrapped as pocket-studio "Stretch". Serves: horror/suspense beds (like the LOTI score), transitions.
+
+## 24. render_midi — MIDI -> WAV, built-in numpy GM synth (NEW, mega-toolkit Tier A)
+`venv/bin/python midi/render_midi.py --input song.mid --output song.wav`
+MIDI file rendering WITHOUT FluidSynth binary or a 140MB SoundFont: pure-numpy General-MIDI-ish voices (piano/strings/brass/bass/lead/pad/flute/reed/organ/bell) + a channel-10 drum kit, parsed with mido. Verified: test .mid (piano+strings+drums) -> 6.0s non-silent wav, peak 0.89. Wrapped as pocket-studio "MIDI→Audio". Serves: score sketches, jingles, beds. Honest limit: GM-ish, not a sampled orchestra — for final mockups use Tier B (LMMS/Cakewalk + Vital).
+
+## 25. mesh3d convert — 3D format conversion + stats (NEW, mega-toolkit Tier A/3D)
+`venv/bin/python mesh3d/convert.py --input model.glb --output model.obj [--info]`
+trimesh-based: GLB/OBJ/STL/PLY conversion plus vertex/face counts, bounds, watertight check. Verified: box GLB -> OBJ, 8 verts/12 faces, watertight, volume 6.0. Wrapped as pocket-studio "3D Convert". Serves: pipeline format handoffs (Blender <-> engines), quick model inspection.
+
+## 26. Tier C GPU notebooks (NEW, mega-toolkit Tier C)
+`tierc-notebooks/` — Colab notebooks for his free GPU (same pattern as Pocket_Studio_Colab.ipynb; JSON-validated, GPU cells not executed here):
+- `ComfyUI_Colab.ipynb` — node-based AI image/video generation (SDXL Turbo, cloudflared link). -> key art, style frames.
+- `RVC_Colab.ipynb` — voice conversion: train on an approved read, convert any line into it. -> leprechaun voice work, character ADR, dubbing.
+- `TripoSR_Colab.ipynb` — image -> 3D model (GLB+OBJ via Gradio). -> props/background models from concept art.
+Catalog: `CREATIVE-TOOLKIT-CATALOG.md` (Tier B desktop/mobile apps + Tier C). 3D stack: `3D-WORKFLOW.md` (Blender + Rigify/Mixamo per the NO FAKE ANIMATION law, ArmorPaint/Material Maker textures).
+
 ## Provenance rule (owner 2026-10-10)
 Never claim hand-drawn when AI generation was involved. Document per-step
 AI vs manual provenance in each job's METHODS file.
