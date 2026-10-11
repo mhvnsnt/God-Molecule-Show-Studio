@@ -1,0 +1,78 @@
+Traceback (most recent call last):
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 278, in <module>
+    cmd_ocr_frame(sys.argv[2], float(sys.argv[3]))
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 184, in cmd_ocr_frame
+    print(json.dumps(ocr.frame_text(video, t), indent=1))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/ocr.py", line 72, in frame_text
+    for (x, y, w, h) in visual_deep.text_regions(frame):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/visual_deep.py", line 142, in text_regions
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.25)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '_delta' is an invalid keyword argument for MSER_create()
+Traceback (most recent call last):
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 278, in <module>
+    cmd_ocr_frame(sys.argv[2], float(sys.argv[3]))
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 184, in cmd_ocr_frame
+    print(json.dumps(ocr.frame_text(video, t), indent=1))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/ocr.py", line 72, in frame_text
+    for (x, y, w, h) in visual_deep.text_regions(frame):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/visual_deep.py", line 142, in text_regions
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.25)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '_delta' is an invalid keyword argument for MSER_create()
+Traceback (most recent call last):
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 278, in <module>
+    cmd_ocr_frame(sys.argv[2], float(sys.argv[3]))
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 184, in cmd_ocr_frame
+    print(json.dumps(ocr.frame_text(video, t), indent=1))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/ocr.py", line 72, in frame_text
+    for (x, y, w, h) in visual_deep.text_regions(frame):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/visual_deep.py", line 142, in text_regions
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.25)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '_delta' is an invalid keyword argument for MSER_create()
+Traceback (most recent call last):
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 278, in <module>
+    cmd_ocr_frame(sys.argv[2], float(sys.argv[3]))
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 184, in cmd_ocr_frame
+    print(json.dumps(ocr.frame_text(video, t), indent=1))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/ocr.py", line 72, in frame_text
+    for (x, y, w, h) in visual_deep.text_regions(frame):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/visual_deep.py", line 142, in text_regions
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.25)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '_delta' is an invalid keyword argument for MSER_create()
+Traceback (most recent call last):
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 278, in <module>
+    cmd_ocr_frame(sys.argv[2], float(sys.argv[3]))
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 184, in cmd_ocr_frame
+    print(json.dumps(ocr.frame_text(video, t), indent=1))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/ocr.py", line 72, in frame_text
+    for (x, y, w, h) in visual_deep.text_regions(frame):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/visual_deep.py", line 142, in text_regions
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.25)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '_delta' is an invalid keyword argument for MSER_create()
+Traceback (most recent call last):
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 278, in <module>
+    cmd_ocr_frame(sys.argv[2], float(sys.argv[3]))
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 184, in cmd_ocr_frame
+    print(json.dumps(ocr.frame_text(video, t), indent=1))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/ocr.py", line 72, in frame_text
+    for (x, y, w, h) in visual_deep.text_regions(frame):
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/visual_deep.py", line 142, in text_regions
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.25)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '_delta' is an invalid keyword argument for MSER_create()
