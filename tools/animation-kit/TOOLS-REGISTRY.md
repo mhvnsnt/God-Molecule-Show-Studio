@@ -67,7 +67,14 @@ NOT-HEADLESS = GUI/plugin only, cannot run in this environment.
 - **Stage:** keyframe gen (character art), merch
 - **Note:** `pip install vtracer` (Rust binary wheel). potrace NOT wired — needs apt/C toolchain unavailable here; vtracer covers the lane.
 
-### 5c. sticker-kit — clean cutting / sticker compositing (PIL, purpose-built)
+### 5d. one-turn image edit toolkit — cutout/outline/svg/select/recolor/eyedropper/fill/restore
+- **Path:** `~/workspace/trippedd-studio/tools/image-edit/` — CLI `edit.py` (owner directive 2026-10-11, with Tyneshia)
+- **Does:** ONE command = one finished job — chainable ops with per-op self-verification + `report.json`. `cutout` (rembg isnet ladder, coverage-picked, never flood-fill), `outline` (clean edge trace), `svg` (vtracer color), `select` (bbox / magic-wand / text+grounding), `recolor` (HSV shift, edges preserved), `eyedropper` (hex + name), `fill`, `restore` (denoise + unsharp).
+- **Invoke:** `edit.py in.png -o out/ --ops cutout,svg --subject "Amos Jr" --bbox 10,600,320,950 --exclude 292,600,320,950`
+- **Verified:** Goodville key art -> clean Amos Jr. cutout (white tank, BEER can, tattoo kept) + valid SVG in ~11s, one call. 4-op chain (select/recolor/eyedropper/outline) in ~1s.
+- **Stage:** all shows — the standard for one-shot image edits (ONE-TURN TOOL LAW).
+
+### 5e. sticker-kit — clean cutting / sticker compositing (PIL, purpose-built)
 - **Path:** `sticker-kit/` — `sticker-kit/run_sticker.py`
 - **Does:** `cleanup` (alpha threshold + edge smoothing), `refine` (erode/feather alpha matting refinement), `sticker` (white-border outline + optional drop shadow), `cutout` (all-in-one merch-ready)
 - **Invoke:** `sticker-kit/run_sticker.py cutout --input cut.png --output sticker.png --border 28 --shadow`
