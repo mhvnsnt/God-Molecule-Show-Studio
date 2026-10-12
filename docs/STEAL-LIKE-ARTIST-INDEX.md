@@ -15,34 +15,63 @@ Three primary inspirations: **Xavier: Renegade Angel** (tone), **Off the Air** (
 ## The three pillars
 
 ### 1. Xavier: Renegade Angel — THE production blueprint
-`~/workspace/animation-techniques/steal-like-artist/adult-swim/study-notes/xavier-production.md`
-Voice-first, separate-room writing, sincere absurdism, CGI grotesque.
+
+**Read:** `~/workspace/animation-techniques/steal-like-artist/adult-swim/study-notes/xavier-production.md`
+
+PFFR's method, directly applicable to God Molecule:
+- **Voice-first:** record all dialogue before any visuals; animation serves voice
+- **Separate-room writing:** two writers isolated, merging incompatible ideas
+- **Sincere absurdism:** characters believe their insane worldview completely
+- **CGI grotesque:** don't smooth the weird — lean into uncanny rendering
+- **Remote direction:** the model for distributed production
 
 ### 2. Off the Air — THE assembly method
-`~/workspace/animation-techniques/steal-like-artist/adult-swim/study-notes/off-the-air-method.md`
+
+**Read:** `~/workspace/animation-techniques/steal-like-artist/adult-swim/study-notes/off-the-air-method.md`
+
 Theme buckets, found footage, datamoshing, music-first editing.
+**Full AS catalog:** `~/workspace/animation-techniques/steal-like-artist/adult-swim/AS-CATALOG.md`
 
 ### 3. Osamu Sato / Eastern Mind — THE philosophical architecture
-`~/workspace/animation-techniques/steal-like-artist/osamu-sato/analysis/eastern-mind-deep-analysis.md`
-`~/workspace/animation-techniques/steal-like-artist/osamu-sato/analysis/god-molecule-application.md`
 
-Head-as-world. Death-as-progress. Five lands as concept taxonomy.
-Sincere absurdism. The purifier twist. Nine variants of one soul.
+**Read first:** `~/workspace/animation-techniques/steal-like-artist/osamu-sato/analysis/eastern-mind-deep-analysis.md`
+**Then:** `~/workspace/animation-techniques/steal-like-artist/osamu-sato/analysis/god-molecule-application.md`
+**Artist profile:** `~/workspace/animation-techniques/steal-like-artist/osamu-sato/analysis/osamu-sato-profile.md`
+
+What to steal:
+- **Head-as-world**: interior states (desire, dreaming, time, life) as physical places
+- **Death-as-progress**: dying transforms, doesn't end — reincarnation as narrative engine
+- **Concept taxonomy**: abstract ideas → distinct visual zones (five lands, five forces)
+- **Sincere absurdism**: never break character (the Xavier overlap)
+- **The purifier twist**: the scary thing was healing you all along
+- **Nine variants**: one soul, nine extreme versions
+- **Small-team maximalism**: 4 people, total creative control
 
 **Game:** `~/workspace/animation-techniques/steal-like-artist/osamu-sato/game/eastern-mind-tongnou.zip`
 **Run it:** `~/workspace/animation-techniques/steal-like-artist/osamu-sato/emulation/emulation-guide.md`
 
 ## World documentation
 
-**Adventure Time bible** (best reference for weird expansive worlds):
-Check pull status in `steal-like-artist/cn-gigaleak/CN-GIGALEAK-CATALOG.md`.
+**Adventure Time bible** — best reference for documenting a weird, expansive world
+with consistent logic. Check pull status: `steal-like-artist/cn-gigaleak/CN-GIGALEAK-CATALOG.md`
 
-**Bible structure analysis:**
-`~/workspace/animation-techniques/steal-like-artist/cn-gigaleak/study-notes/bible-structure-analysis.md`
+**Architecture:** `~/workspace/animation-techniques/steal-like-artist/cn-gigaleak/study-notes/bible-structure-analysis.md`
+**Template:** `~/workspace/animation-techniques/templates/show-bible-template.md`
+
+## Character documentation
+
+**Template:** `~/workspace/animation-techniques/templates/character-model-sheet-template.md`
+Turnaround → expressions → mouth chart → hands → color model. No likeness drift.
+
+## Pulled bibles
+
+- `steal-like-artist/cn-gigaleak/bibles/JohnnyBravoSeason2Bible.pdf`
+- `steal-like-artist/cn-gigaleak/bibles/KND-Production-Bible-2002.pdf`
+- `steal-like-artist/other-packs/disney-tva-leak/` (Gravity Falls, Owl House, Wander Over Yonder)
 
 ## The rule
 
 Study the STRUCTURE. Build ORIGINAL work. We learn the craft, we don't copy characters.
 
-**Note on canon:** The ShowBible.tsx hierarchy stands — these study materials
-inform the craft, they don't override canon.
+---
+*Wired 2026-10-12. Per the God Molecule bible hierarchy: ShowBible.tsx is "the word of God" — these materials inform structure, never override canon.*
