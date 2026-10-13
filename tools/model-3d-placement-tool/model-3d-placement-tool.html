@@ -1,0 +1,110 @@
+<div id="pv3d" style="box-sizing:border-box;max-width:680px;margin:0 auto;font-family:sans-serif;">
+<style>
+#pv3d #vp{position:relative;width:100%;aspect-ratio:1/1;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:8px;overflow:hidden;touch-action:none;}
+#pv3d #vp canvas{display:block;width:100%;height:100%;}
+#pv3d #load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--hatch-widget-muted);font-size:14px;pointer-events:none;}
+#pv3d .row{display:flex;align-items:center;gap:8px;margin:8px 0;color:var(--hatch-widget-text);}
+#pv3d .row label{width:64px;font-size:13px;color:var(--hatch-widget-muted);}
+#pv3d .row input[type=range]{flex:1;accent-color:var(--hatch-widget-accent);}
+#pv3d .row .val{width:64px;text-align:right;font-size:13px;font-variant-numeric:tabular-nums;}
+#pv3d .btns{display:flex;gap:8px;margin-top:10px;}
+#pv3d button{flex:1;padding:10px;border-radius:8px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-size:14px;cursor:pointer;}
+#pv3d button.primary{background:var(--hatch-widget-accent);color:var(--hatch-widget-on-accent);border:none;}
+#pv3d .copied{text-align:center;font-size:12px;color:var(--hatch-widget-muted);min-height:16px;margin-top:6px;}
+#pv3d .hint{font-size:12px;color:var(--hatch-widget-muted);margin-top:8px;line-height:1.5;}
+</style>
+<div id="vp"><div id="load">Loading 3D model...</div></div>
+<div class="row"><label>X</label><input type="range" id="px" min="-0.5" max="0.5" step="0.005" value="0"><span class="val" id="pvx">0</span></div>
+<div class="row"><label>Y</label><input type="range" id="py" min="-0.5" max="0.5" step="0.005" value="0"><span class="val" id="pvy">0</span></div>
+<div class="row"><label>Z</label><input type="range" id="pz" min="-0.5" max="0.5" step="0.005" value="0"><span class="val" id="pvz">0</span></div>
+<div class="row"><label>Scale</label><input type="range" id="ps" min="0.5" max="2" step="0.05" value="1"><span class="val" id="pvs">1.00</span></div>
+<div class="btns"><button id="preset">Reset</button><button class="primary" id="psave">Save</button></div>
+<div class="copied" id="pcopied"></div>
+<div class="hint">Model 3D Placement Tool. Drag to orbit, pinch to zoom, two fingers to pan. Grab the arrow gizmo on the part to drag it through real 3D space, or fine-tune with the sliders. Get the base sitting on the body surface, hit Save, send me the numbers.</div>
+</div>
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { TransformControls } from 'three/addons/controls/TransformControls.js';
+var S = window.hatchWidget.getState({x:0,y:0,z:0,s:1});
+var vp = document.getElementById('vp');
+var renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+vp.appendChild(renderer.domElement);
+function size(){ var w=vp.clientWidth,h=vp.clientHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
+camera.position.set(2.2,-2.6,1.6);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x555555, 1.1));
+var dl = new THREE.DirectionalLight(0xffffff, 1.6); dl.position.set(2,3,4); scene.add(dl);
+var dl2 = new THREE.DirectionalLight(0xffffff, 0.5); dl2.position.set(-3,-2,-2); scene.add(dl2);
+var controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+var tc = new TransformControls(camera, renderer.domElement);
+tc.setSize(0.8); scene.add(tc);
+tc.addEventListener('dragging-changed', function(e){ controls.enabled = !e.value; });
+var loader = new GLTFLoader();
+var q = new URLSearchParams(location.search);
+var BODY = q.get('body') || 'https://raw.githubusercontent.com/mhvnsnt/western-heart/main/roster/pantera/tail-rig/pantera_body.glb';
+var TAIL = q.get('part') || 'https://raw.githubusercontent.com/mhvnsnt/western-heart/main/roster/pantera/tail-rig/pantera_tail.glb';
+var PARTNAME = q.get('name') || 'part';
+var tail=null, initPos=null;
+function applyState(){
+  if(!tail||!initPos) return;
+  tail.position.set(initPos.x+S.x, initPos.y+S.y, initPos.z+S.z);
+  tail.scale.setScalar(S.s);
+  document.getElementById('pvx').textContent=(+S.x).toFixed(3);
+  document.getElementById('pvy').textContent=(+S.y).toFixed(3);
+  document.getElementById('pvz').textContent=(+S.z).toFixed(3);
+  document.getElementById('pvs').textContent=(+S.s).toFixed(2);
+  document.getElementById('px').value=S.x; document.getElementById('py').value=S.y;
+  document.getElementById('pz').value=S.z; document.getElementById('ps').value=S.s;
+}
+function set(k,v){ S=Object.assign({},S); S[k]=v; window.hatchWidget.setState(S); applyState(); }
+[['px','x'],['py','y'],['pz','z']].forEach(function(p){
+  document.getElementById(p[0]).addEventListener('input',function(e){ set(p[1], parseFloat(e.target.value)); });
+});
+document.getElementById('ps').addEventListener('input',function(e){ set('s', parseFloat(e.target.value)); });
+document.getElementById('preset').addEventListener('click',function(){
+  S={x:0,y:0,z:0,s:1}; window.hatchWidget.setState(S); applyState();
+  document.getElementById('pcopied').textContent='';
+});
+document.getElementById('psave').addEventListener('click',function(){
+  var txt='X='+(+S.x).toFixed(4)+' Y='+(+S.y).toFixed(4)+' Z='+(+S.z).toFixed(4)+' Scale='+(+S.s).toFixed(2);
+  function done(){document.getElementById('pcopied').textContent='Copied: '+txt;}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);} else {done();}
+});
+window.addEventListener('hatch-widget-state',function(e){S=e.detail.state;applyState();});
+tc.addEventListener('objectChange', function(){
+  if(!tail||!initPos) return;
+  S=Object.assign({},S,{x:tail.position.x-initPos.x, y:tail.position.y-initPos.y, z:tail.position.z-initPos.z});
+  window.hatchWidget.setState(S); applyState();
+});
+var loaded=0;
+function frameObject(obj){
+  var box=new THREE.Box3().setFromObject(obj);
+  var c=box.getCenter(new THREE.Vector3()), s=box.getSize(new THREE.Vector3());
+  var d=Math.max(s.x,s.y,s.z);
+  camera.position.set(c.x+d*0.9, c.y-d*1.1, c.z+d*0.7);
+  controls.target.copy(c); controls.update();
+  var grid=new THREE.GridHelper(d*2.2, 22, 0x888888, 0x555555);
+  grid.position.y=box.min.y-0.001; grid.material.transparent=true; grid.material.opacity=0.35;
+  scene.add(grid);
+}
+function maybeDone(){
+  loaded++;
+  if(loaded===2){ document.getElementById('load').style.display='none'; applyState(); }
+}
+loader.load(BODY, function(g){ scene.add(g.scene); frameObject(g.scene); maybeDone(); },
+  undefined, function(){ document.getElementById('load').textContent='Body failed to load. Check connection and reopen.'; });
+loader.load(TAIL, function(g){
+  tail=g.scene; scene.add(tail); initPos=tail.position.clone(); tc.attach(tail); maybeDone();
+}, undefined, function(){ document.getElementById('load').textContent='Tail failed to load. Check connection and reopen.'; });
+size(); window.addEventListener('resize', size);
+(function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
+applyState();
+</script>
