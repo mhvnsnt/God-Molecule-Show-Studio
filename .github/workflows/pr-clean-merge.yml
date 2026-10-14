@@ -1,0 +1,68 @@
+# PR clean-merge gate + auto-merge (owner rule, approved Oct 14 2026):
+#   "a PR may merge into main only if it merges cleanly, its tests and CI pass,
+#    and it deletes or breaks nothing on main. Anything else stays an open PR."
+# Job 1 (validate) always runs on every PR to main:
+#   - JSON lint of every changed *.json file
+#   - beat-grid self-tests (tools/grid.py, tools/promo-pack-kit/scene_grid.py) where present
+#   - promo_gates.py --self-test where present (must FAIL the bundled v1 defects = exit 1)
+#   - FAILS if the PR deletes ANY file that exists on main
+# Job 2 (automerge) runs only after validate passes: waits for every other check on the
+# head commit to finish green, confirms GitHub reports the PR as cleanly mergeable, then
+# merges (gh pr merge --auto, falling back to a direct merge when the repo has no
+# required-check protection). Skipped for drafts, forks, the "no-automerge" label, and
+# PRs that change .github/workflows (GITHUB_TOKEN may not merge those; owner merges by hand).
+name: pr-clean-merge
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review, labeled]
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  statuses: read
+concurrency:
+  group: pr-clean-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, filter: "blob:none" }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: No deletions of files on main
+        env: { BASE: "${{ github.event.pull_request.base.sha }}", HEAD: "${{ github.event.pull_request.head.sha }}" }
+        run: |
+          set -euo pipefail
+          git diff --no-renames --diff-filter=D --name-only "$BASE...$HEAD" > deleted.txt || true
+          if [ -s deleted.txt ]; then
+            echo "::error::This PR deletes $(wc -l < deleted.txt) file(s) that exist on main. Owner rule: nothing on main gets deleted by an auto-merged PR."
+            head -200 deleted.txt; exit 1
+          fi
+          echo "OK: no files deleted"
+      - name: Validate changed JSON
+        env: { BASE: "${{ github.event.pull_request.base.sha }}", HEAD: "${{ github.event.pull_request.head.sha }}" }
+        run: python3 .github/scripts/pr_validate.py json "$BASE" "$HEAD"
+      - name: Beat-grid and promo-gate self-tests (where present)
+        run: python3 .github/scripts/pr_validate.py selftests
+  automerge:
+    needs: validate
+    if: >-
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      !contains(github.event.pull_request.labels.*.name, 'no-automerge')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, filter: "blob:none" }
+      - name: Wait for all other checks, confirm clean, merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+          SELF_RUN: ${{ github.run_id }}
+        run: python3 .github/scripts/pr_validate.py automerge
