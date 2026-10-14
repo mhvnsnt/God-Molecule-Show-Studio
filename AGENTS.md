@@ -11,3 +11,8 @@ See `ANIMATION-REFERENCE.md` and [GOODVILLE-POSTMORTEM](https://github.com/mhvns
 7. **Owner's voice files get placed, not offloaded.** Any voice in `voices/` is wired into the timeline with a `start_s`.
 8. **Mobile-editable.** Every layer is a separate file and every timing lives in `timeline.json`. `edit.html` must keep working on a phone.
 9. Follow the money-machine-hq PR **instruction gate** (verbatim instruction / method specified / method used / deviations / proof / self-check): https://github.com/mhvnsnt/money-machine-hq/blob/main/.github/pull_request_template.md. Also follow **Law 14** (never remove the owner's work) and **Law 15** (lock the method): https://github.com/mhvnsnt/money-machine-hq/blob/main/docs/AGENTS.md
+
+
+## Sale status (owner rule, Oct 14, 2026)
+
+No game is on a commercial or sale track until the owner explicitly says "I'm going to sell this," even if earlier docs say it is being made to sell. Until then, agents must not withhold, water down, or refuse requested work because it might affect publishing or sale readiness. Sale-readiness rework (rescanning or replacing third-party-derived content) happens only after the owner declares a sale.
