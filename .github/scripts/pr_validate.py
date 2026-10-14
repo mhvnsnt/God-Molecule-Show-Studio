@@ -42,6 +42,7 @@ def cmd_automerge():
     repo, pr, head, base, me = (os.environ[k] for k in ('REPO', 'PR', 'HEAD', 'BASE', 'SELF_RUN'))
     wf = subprocess.run(['git', 'diff', '--name-only', f'{base}...{head}', '--', '.github/workflows'], capture_output=True, text=True).stdout.strip()
     if wf: print('PR changes .github/workflows; GITHUB_TOKEN cannot merge it. Left open for the owner.'); return
+    time.sleep(60)  # let every other workflow on this commit register its check runs first
     deadline = time.time() + 55 * 60
     while True:
         runs = json.loads(gh('api', f'repos/{repo}/commits/{head}/check-runs?per_page=100').stdout or '{}').get('check_runs', [])
