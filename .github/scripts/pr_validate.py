@@ -47,6 +47,9 @@ def cmd_automerge():
     while True:
         runs = json.loads(gh('api', f'repos/{repo}/commits/{head}/check-runs?per_page=100').stdout or '{}').get('check_runs', [])
         others = [c for c in runs if f'/runs/{me}/' not in (c.get('details_url') or '')]
+        latest = {}  # a re-run (e.g. instruction-gate after a PR body edit) supersedes the older result of the same check
+        for c in sorted(others, key=lambda c: c.get('started_at') or ''): latest[c['name']] = c
+        others = list(latest.values())
         st = json.loads(gh('api', f'repos/{repo}/commits/{head}/status').stdout or '{}').get('statuses', [])
         pending = [c['name'] for c in others if c['status'] != 'completed'] + [s['context'] for s in st if s['state'] == 'pending']
         failed = [c['name'] for c in others if c['status'] == 'completed' and c['conclusion'] not in ('success', 'neutral', 'skipped')] \
