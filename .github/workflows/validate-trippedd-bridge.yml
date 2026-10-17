@@ -1,0 +1,83 @@
+name: validate-trippedd-bridge
+
+on:
+  push:
+    paths:
+      - "config/god_molecule_trippedd_bridge.json"
+      - "config/trippedd_production_bridge.json"
+      - ".github/workflows/validate-trippedd-bridge.yml"
+  pull_request:
+    paths:
+      - "config/god_molecule_trippedd_bridge.json"
+      - "config/trippedd_production_bridge.json"
+      - ".github/workflows/validate-trippedd-bridge.yml"
+  workflow_dispatch:
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate bridge contract and target repository
+        run: |
+          python - <<'PY'
+          import json
+          import urllib.request
+
+          bridge = json.load(open("config/god_molecule_trippedd_bridge.json", encoding="utf-8"))
+          local = json.load(open("config/trippedd_production_bridge.json", encoding="utf-8"))
+
+          def get(url):
+              req = urllib.request.Request(url, headers={"Accept": "application/vnd.github+json"})
+              with urllib.request.urlopen(req, timeout=20) as r:
+                  return json.load(r)
+
+          source = get(f"https://api.github.com/repos/{bridge['source_repo']}/commits/main")["sha"]
+          target = get(f"https://api.github.com/repos/{bridge['target_repo']}/commits/main")["sha"]
+
+          assert bridge["source_repo"] == "mhvnsnt/God-Molecule-Show-Studio"
+          assert bridge["target_repo"] == "mhvnsnt/TRIPPEDD-Production-studios-"
+          assert local["show_repo"] == bridge["source_repo"]
+          assert local["production_repo"] == bridge["target_repo"]
+          assert local["identity"] == "MARS_CANONICAL"
+          assert bridge["identity_rule"].startswith("MARS_CANONICAL immutable")
+          assert bridge["operating_model"]["shared_runtime"] == "TRIPPEDD tools/character is the single production implementation"
+          assert bridge["promotion_order"][:8] == [
+              "mars_lod2_input_preflight",
+              "mvmp_478_landmarks",
+              "semantic_eyelids",
+              "eye_sockets",
+              "face_rig",
+              "actual_blink",
+              "actual_png_evidence",
+              "brow_eyelid_measurements",
+          ]
+
+          # Snapshot heads are synchronization records, not a requirement that the
+          # source repositories stop moving. Confirm both pinned commits still exist.
+          get(f"https://api.github.com/repos/{bridge['source_repo']}/commits/{bridge['source_head']}")
+          get(f"https://api.github.com/repos/{bridge['target_repo']}/commits/{bridge['target_head']}")
+
+          required = [
+              "tools/character/validate_mars_lod2_input.py",
+              "tools/character/measure_eyelids_semantic.py",
+              "tools/character/validate_mars_oral_centerline.py",
+              "tools/character/build_mars_oral_bridge.py",
+              "tools/character/survey_oral_aperture.py",
+              "tools/character/assemble_human_review_package.py",
+              "tools/character/measure_jaw_separation.py",
+              "tools/animation/validate_rhubarb_json.py",
+              "tools/character/validate_expression_blink_package.py",
+              "tools/animation/validate_performance_render.py",
+          ]
+          tree = get(f"https://api.github.com/repos/{bridge['target_repo']}/git/trees/{target}?recursive=1")["tree"]
+          paths = {x["path"] for x in tree}
+          missing = [p for p in required if p not in paths]
+          assert not missing, f"missing TRIPPEDD gate tools: {missing}"
+
+          print(f"Bridge contract PASS: source main={source}, target main={target}")
+          print(f"Pinned sync: {bridge['source_head']} -> {bridge['target_head']}")
+          print("MARS_LOD2 preflight is fail-closed; no substitute asset may be promoted.")
+          print("MARS_CANONICAL immutable; TRIPPEDD character tools remain the single production implementation.")
+          PY

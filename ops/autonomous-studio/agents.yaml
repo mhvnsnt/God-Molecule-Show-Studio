@@ -1,0 +1,25 @@
+agents:
+  character_supervisor:
+    role: character production lead
+    autonomy: execute_until_review
+  geometry_rigger:
+    role: Blender geometry and rig specialist
+    autonomy: execute
+  animation_director:
+    role: pose, animation and camera specialist
+    autonomy: execute_until_review
+  generative_artist:
+    role: ComfyUI visual specialist
+    autonomy: execute_until_review
+  evidence_renderer:
+    role: physical render and measurement specialist
+    autonomy: execute
+  qc_provenance:
+    role: independent evidence auditor
+    autonomy: execute
+  recovery_engineer:
+    role: failure recovery and rerun specialist
+    autonomy: execute
+  showrunner:
+    role: final creative authority
+    autonomy: final_authority

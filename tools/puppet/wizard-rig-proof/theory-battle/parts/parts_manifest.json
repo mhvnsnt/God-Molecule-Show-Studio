@@ -1,0 +1,64 @@
+{
+  "source": "theory_battle_crop_source.png (430x882)",
+  "method": "polygon silhouette x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: right fist raised (white glove). arm auto-split _lo/_up FK. figure cut by stone ledge (3/4-body); Ashes red sliver subtracted; glints cut by tight ROIs; no mouth art (pipeline no-mouth path)",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_accessory",
+    "04_arm",
+    "05_eyes"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 99768,
+      "bbox_xyxy": [
+        128,
+        319,
+        429,
+        792
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 24927,
+      "bbox_xyxy": [
+        140,
+        165,
+        345,
+        345
+      ]
+    },
+    {
+      "layer": "03_accessory",
+      "pixels": 12075,
+      "bbox_xyxy": [
+        235,
+        304,
+        348,
+        508
+      ]
+    },
+    {
+      "layer": "04_arm",
+      "pixels": 21798,
+      "bbox_xyxy": [
+        132,
+        20,
+        222,
+        300
+      ]
+    },
+    {
+      "layer": "05_eyes",
+      "pixels": 660,
+      "bbox_xyxy": [
+        249,
+        227,
+        346,
+        247
+      ]
+    }
+  ]
+}

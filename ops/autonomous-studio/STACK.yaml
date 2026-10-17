@@ -1,0 +1,39 @@
+version: 1
+name: god-molecule-autonomous-character-stack
+purpose: autonomous character-animation-render-evidence team
+shared_contract: ../TRIPPEDD-Production-studios-/ops/autonomous-studio
+
+control_plane:
+  orchestrator: langgraph
+  role_team: crewai
+  tool_protocol: mcp-python-sdk
+  model_gateway: litellm
+  coding_agent: openhands
+  automation: n8n
+
+production_tools:
+  - Blender
+  - ComfyUI
+  - FFmpeg
+  - OpenTimelineIO
+  - OpenCV
+  - Tesseract
+  - whisper.cpp
+  - Rhubarb Lip Sync
+
+agent_groups:
+  - character_supervisor
+  - geometry_and_rigging
+  - animation_and_pose
+  - generative_visuals
+  - render_and_evidence
+  - qc_and_provenance
+  - recovery
+
+hard_gates:
+  - canonical_asset_identity
+  - geometry_manifold
+  - physical_measurement
+  - render_evidence
+  - provenance
+  - human_greenlight

@@ -1,0 +1,7 @@
+{
+  "name": "God Molecule Studio",
+  "description": "The show-specific creative cockpit and production environment for God Molecule.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

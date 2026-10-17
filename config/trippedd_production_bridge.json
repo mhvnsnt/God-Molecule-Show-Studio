@@ -1,0 +1,16 @@
+{
+  "schema": "god-molecule.show-studio.bridge.v1",
+  "show_repo": "mhvnsnt/God-Molecule-Show-Studio",
+  "production_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
+  "show_authority": ["src/components/ShowBible.tsx", "src/data.ts"],
+  "production_authority": [
+    "tools/character/",
+    "tools/environment/",
+    "config/",
+    "production/",
+    "production_conversations/"
+  ],
+  "active_episode": {"id":"ep-01","title":"The Recursive Room","seed":742918,"world_id":"GM-WORLD-0001"},
+  "identity": "MARS_CANONICAL",
+  "rule": "Show canon originates here; executable production and evidence originate in TRIPPEDD. Canon snapshots must record this repo and source commit. Never replace MARS_CANONICAL with donor/generated media."
+}

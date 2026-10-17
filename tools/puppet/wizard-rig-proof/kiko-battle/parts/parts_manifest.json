@@ -1,0 +1,64 @@
+{
+  "source": "kiko_battle_crop_source.png (500x912)",
+  "method": "ROI x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: fists-raised pose; frame-cut bottom (no legs); spatial arm/shoulder cuts; KIKO pendant preserved (owner keep-or-cut flag); no mouth art",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_accessory",
+    "04_arm_l",
+    "06_eyes"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 159538,
+      "bbox_xyxy": [
+        0,
+        171,
+        499,
+        911
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 129201,
+      "bbox_xyxy": [
+        95,
+        180,
+        499,
+        524
+      ]
+    },
+    {
+      "layer": "03_accessory",
+      "pixels": 22525,
+      "bbox_xyxy": [
+        165,
+        399,
+        362,
+        739
+      ]
+    },
+    {
+      "layer": "04_arm_l",
+      "pixels": 29439,
+      "bbox_xyxy": [
+        0,
+        0,
+        94,
+        429
+      ]
+    },
+    {
+      "layer": "06_eyes",
+      "pixels": 844,
+      "bbox_xyxy": [
+        267,
+        278,
+        366,
+        315
+      ]
+    }
+  ]
+}

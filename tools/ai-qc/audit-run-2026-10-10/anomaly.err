@@ -1,0 +1,19 @@
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1791691847.591057   27565 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1791691848.077213   27571 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791691848.484423   27571 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+Traceback (most recent call last):
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 282, in <module>
+    cmd_anomaly(sys.argv[2])
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 193, in cmd_anomaly
+    "av_sync": anomaly.av_sync_anomalies(video),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/anomaly.py", line 40, in av_sync_anomalies
+    vad = audio_qc.speech_activity(y, sr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/audio_qc.py", line 32, in speech_activity
+    import webrtcvad
+  File "/home/hatch/workspace/tools/ai-qc/venv/lib/python3.12/site-packages/webrtcvad.py", line 1, in <module>
+    import pkg_resources
+ModuleNotFoundError: No module named 'pkg_resources'

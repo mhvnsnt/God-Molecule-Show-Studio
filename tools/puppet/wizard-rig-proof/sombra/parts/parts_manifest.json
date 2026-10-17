@@ -1,0 +1,68 @@
+{
+  "source": "sombra_crop_source.png (600x1040)",
+  "method": "trim-seeded black-component segmentation + Telea inpainting (Wave-4/5/6 recipe)",
+  "stack_bottom_to_top": [
+    "00_torso.png",
+    "01_face_base.png",
+    "02_accessory.png",
+    "03_eye_l.png",
+    "04_eye_r.png"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "rig_file": "00_torso.png",
+      "pixels": 225943,
+      "bbox_xyxy": [
+        189,
+        59,
+        576,
+        1039
+      ]
+    },
+    {
+      "layer": "02_head",
+      "rig_file": "01_face_base.png",
+      "pixels": 68919,
+      "bbox_xyxy": [
+        223,
+        70,
+        429,
+        459
+      ]
+    },
+    {
+      "layer": "03_chain",
+      "rig_file": "02_accessory.png",
+      "pixels": 2289,
+      "bbox_xyxy": [
+        308,
+        252,
+        382,
+        379
+      ]
+    },
+    {
+      "layer": "04_eye_L",
+      "rig_file": "03_eye_l.png",
+      "pixels": 50,
+      "bbox_xyxy": [
+        279,
+        123,
+        287,
+        129
+      ]
+    },
+    {
+      "layer": "05_eye_R",
+      "rig_file": "04_eye_r.png",
+      "pixels": 147,
+      "bbox_xyxy": [
+        303,
+        107,
+        319,
+        119
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "source": "hollow_battle_crop_source.png (940x872)",
+  "method": "polygon silhouette x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: bust (pilot still). chains + HOLLOW pendant merged on torso (no separate accessory, no ParamAcc0 \u2014 Wave-6 precedent). no arms in source (no arm params). glints cut by tight ROIs. no mouth art (pipeline no-mouth path)",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_eyes"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 214679,
+      "bbox_xyxy": [
+        223,
+        401,
+        717,
+        871
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 76109,
+      "bbox_xyxy": [
+        244,
+        23,
+        696,
+        400
+      ]
+    },
+    {
+      "layer": "03_eyes",
+      "pixels": 2297,
+      "bbox_xyxy": [
+        370,
+        204,
+        555,
+        242
+      ]
+    }
+  ]
+}

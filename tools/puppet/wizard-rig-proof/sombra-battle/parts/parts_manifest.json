@@ -1,0 +1,53 @@
+{
+  "source": "sombra_battle_crop_source.png (400x1250)",
+  "method": "polygon silhouette x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: ritual-circle summoning pose, full body. hands merged with robe sleeves (painterly dark-on-dark, no separable pixels); no mouth art (pipeline no-mouth path)",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_accessory",
+    "05_eyes"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 174869,
+      "bbox_xyxy": [
+        7,
+        305,
+        296,
+        1010
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 49309,
+      "bbox_xyxy": [
+        88,
+        95,
+        299,
+        335
+      ]
+    },
+    {
+      "layer": "03_accessory",
+      "pixels": 4645,
+      "bbox_xyxy": [
+        141,
+        329,
+        237,
+        698
+      ]
+    },
+    {
+      "layer": "05_eyes",
+      "pixels": 300,
+      "bbox_xyxy": [
+        153,
+        214,
+        218,
+        235
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "source": "ashes_battle_crop_source.png (780x885)",
+  "method": "ROI x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: mid-dunk pose; only one arm visible (honest constraint); ball is a scene prop layer",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_braid_L",
+    "04_braid_R",
+    "05_chain",
+    "06_arm",
+    "07_ball",
+    "08_eyes",
+    "09_grill"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 88783,
+      "bbox_xyxy": [
+        413,
+        42,
+        779,
+        800
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 22193,
+      "bbox_xyxy": [
+        585,
+        152,
+        747,
+        317
+      ]
+    },
+    {
+      "layer": "03_braid_L",
+      "pixels": 3034,
+      "bbox_xyxy": [
+        588,
+        224,
+        649,
+        434
+      ]
+    },
+    {
+      "layer": "04_braid_R",
+      "pixels": 2232,
+      "bbox_xyxy": [
+        700,
+        224,
+        760,
+        434
+      ]
+    },
+    {
+      "layer": "05_chain",
+      "pixels": 1328,
+      "bbox_xyxy": [
+        642,
+        268,
+        713,
+        381
+      ]
+    },
+    {
+      "layer": "06_arm",
+      "pixels": 17805,
+      "bbox_xyxy": [
+        453,
+        95,
+        587,
+        431
+      ]
+    },
+    {
+      "layer": "07_ball",
+      "pixels": 8687,
+      "bbox_xyxy": [
+        423,
+        36,
+        531,
+        152
+      ]
+    },
+    {
+      "layer": "08_eyes",
+      "pixels": 289,
+      "bbox_xyxy": [
+        640,
+        196,
+        697,
+        206
+      ]
+    },
+    {
+      "layer": "09_grill",
+      "pixels": 804,
+      "bbox_xyxy": [
+        652,
+        222,
+        697,
+        263
+      ]
+    }
+  ]
+}
