@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "show": "God Molecule",
+  "control_plane_repo": "mhvnsnt/God-Molecule-Show-Studio",
+  "production_runtime_repo": "mhvnsnt/TRIPPEDD-Production-studios-",
+  "rule": "God Molecule Studio is the cockpit; TRIPPEDD is the production engine.",
+  "heavy_compute": "external_worker",
+  "render_contract": "trippedd.render-job.v1",
+  "canonical_character": "MARS_CANONICAL",
+  "environment_contract": "god-molecule.environment-slice.v1",
+  "default_first_shot": {"scene": "GM-WORLD-0001-TEST", "seed": "742918", "resolution": "640x360", "fps": 12, "frames": 8},
+  "no_fake_pass": true,
+  "no_identity_substitution": true,
+  "oom_policy": "worker failure -> recovery; never application failure"
+}

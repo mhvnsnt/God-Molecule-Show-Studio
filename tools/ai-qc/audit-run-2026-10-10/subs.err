@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 280, in <module>
+    cmd_subs(sys.argv[2])
+  File "/home/hatch/workspace/tools/ai-qc/qc.py", line 188, in cmd_subs
+    print(json.dumps({"subtitles": ocr.subtitle_scan(video)}, indent=1))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/ocr.py", line 102, in subtitle_scan
+    for (x, y, bw, bh) in visual_deep.text_regions(zone):
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hatch/workspace/tools/ai-qc/visual_deep.py", line 142, in text_regions
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.25)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '_delta' is an invalid keyword argument for MSER_create()

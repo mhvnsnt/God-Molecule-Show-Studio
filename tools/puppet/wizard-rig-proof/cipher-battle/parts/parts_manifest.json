@@ -1,0 +1,64 @@
+{
+  "source": "cipher_battle_crop_source.png (469x882)",
+  "method": "polygon silhouette x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: left fist raised (fist cut by crop top; sleeve + partial fist). arm auto-split _lo/_up FK. glints cut by tight ROIs + interior-component selection (same hue as robe). no pendant in source (none grafted). figure cut by stone ledge (3/4-body); no mouth art (pipeline no-mouth path)",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_accessory",
+    "04_arm",
+    "05_eyes"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 85866,
+      "bbox_xyxy": [
+        213,
+        259,
+        468,
+        696
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 25176,
+      "bbox_xyxy": [
+        220,
+        90,
+        405,
+        280
+      ]
+    },
+    {
+      "layer": "03_accessory",
+      "pixels": 24477,
+      "bbox_xyxy": [
+        239,
+        264,
+        410,
+        410
+      ]
+    },
+    {
+      "layer": "04_arm",
+      "pixels": 17724,
+      "bbox_xyxy": [
+        385,
+        0,
+        468,
+        210
+      ]
+    },
+    {
+      "layer": "05_eyes",
+      "pixels": 594,
+      "bbox_xyxy": [
+        249,
+        148,
+        342,
+        165
+      ]
+    }
+  ]
+}

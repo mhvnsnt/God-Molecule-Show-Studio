@@ -1,0 +1,36 @@
+=== hands t=30 ===
+[
+ {
+  "note": "hand model not downloaded"
+ }
+]
+=== hands t=90 ===
+[
+ {
+  "note": "hand model not downloaded"
+ }
+]
+=== hands t=150 ===
+[
+ {
+  "note": "hand model not downloaded"
+ }
+]
+=== hands t=210 ===
+[
+ {
+  "note": "hand model not downloaded"
+ }
+]
+=== hands t=270 ===
+[
+ {
+  "note": "hand model not downloaded"
+ }
+]
+=== hands t=330 ===
+[
+ {
+  "note": "hand model not downloaded"
+ }
+]

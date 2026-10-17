@@ -1,0 +1,5 @@
+mcp/venv/
+*/venv/
+*.npz
+__pycache__/
+*.pyc

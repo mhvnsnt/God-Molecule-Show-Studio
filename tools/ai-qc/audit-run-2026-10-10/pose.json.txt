@@ -1,0 +1,36 @@
+=== pose t=30 ===
+[
+ {
+  "note": "pose model not downloaded"
+ }
+]
+=== pose t=90 ===
+[
+ {
+  "note": "pose model not downloaded"
+ }
+]
+=== pose t=150 ===
+[
+ {
+  "note": "pose model not downloaded"
+ }
+]
+=== pose t=210 ===
+[
+ {
+  "note": "pose model not downloaded"
+ }
+]
+=== pose t=270 ===
+[
+ {
+  "note": "pose model not downloaded"
+ }
+]
+=== pose t=330 ===
+[
+ {
+  "note": "pose model not downloaded"
+ }
+]

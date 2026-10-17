@@ -1,0 +1,64 @@
+{
+  "source": "static_battle_crop_source.png (540x740)",
+  "method": "ROI x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: arm-extended claw-machine pose; full body; no pendant in source (none grafted); no mouth art (pipeline no-mouth path)",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_accessory",
+    "04_arm",
+    "05_eyes"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 147545,
+      "bbox_xyxy": [
+        97,
+        0,
+        445,
+        739
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 44169,
+      "bbox_xyxy": [
+        169,
+        0,
+        394,
+        264
+      ]
+    },
+    {
+      "layer": "03_accessory",
+      "pixels": 11151,
+      "bbox_xyxy": [
+        227,
+        186,
+        356,
+        340
+      ]
+    },
+    {
+      "layer": "04_arm",
+      "pixels": 16020,
+      "bbox_xyxy": [
+        59,
+        285,
+        214,
+        494
+      ]
+    },
+    {
+      "layer": "05_eyes",
+      "pixels": 194,
+      "bbox_xyxy": [
+        218,
+        134,
+        265,
+        149
+      ]
+    }
+  ]
+}

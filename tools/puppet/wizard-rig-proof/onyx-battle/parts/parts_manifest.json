@@ -1,0 +1,64 @@
+{
+  "source": "onyx_battle_crop_source.png (470x852)",
+  "method": "polygon silhouette x HSV color segmentation + Telea inpainting",
+  "note": "battle variant: staff-raised jester stance, bust length (ledge cut). staff prop inpainted out (hand stays); glints cut by tight ROIs (same hue as robe); no mouth art (pipeline no-mouth path)",
+  "stack_bottom_to_top": [
+    "01_robe",
+    "02_head",
+    "03_accessory",
+    "04_arm",
+    "05_eyes"
+  ],
+  "layers": [
+    {
+      "layer": "01_robe",
+      "pixels": 53962,
+      "bbox_xyxy": [
+        73,
+        295,
+        330,
+        726
+      ]
+    },
+    {
+      "layer": "02_head",
+      "pixels": 68812,
+      "bbox_xyxy": [
+        90,
+        110,
+        330,
+        449
+      ]
+    },
+    {
+      "layer": "03_accessory",
+      "pixels": 3826,
+      "bbox_xyxy": [
+        144,
+        369,
+        331,
+        481
+      ]
+    },
+    {
+      "layer": "04_arm",
+      "pixels": 18654,
+      "bbox_xyxy": [
+        52,
+        370,
+        165,
+        640
+      ]
+    },
+    {
+      "layer": "05_eyes",
+      "pixels": 467,
+      "bbox_xyxy": [
+        134,
+        241,
+        193,
+        267
+      ]
+    }
+  ]
+}
