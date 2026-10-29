@@ -63,6 +63,13 @@
     "keyforms": 3
   },
   {
+    "id": "ParamHairFront",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
     "id": "ParamHairSide",
     "min": -1.0,
     "max": 1.0,
@@ -98,6 +105,55 @@
     "keyforms": 3
   },
   {
+    "id": "ParamHairSide6",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairBack",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairBack2",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairBack3",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairBack4",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairBack5",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamHairFrontV",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
     "id": "ParamHairSideV",
     "min": -1.0,
     "max": 1.0,
@@ -105,7 +161,21 @@
     "keyforms": 3
   },
   {
+    "id": "ParamHairBackV",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
     "id": "ParamAcc0",
+    "min": -1.0,
+    "max": 1.0,
+    "default": 0.0,
+    "keyforms": 3
+  },
+  {
+    "id": "ParamAcc1",
     "min": -1.0,
     "max": 1.0,
     "default": 0.0,
