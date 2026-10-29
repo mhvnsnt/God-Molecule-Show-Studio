@@ -1,100 +1,146 @@
 {
   "source": "ashes_crop_source.png (400x864)",
-  "method": "ROI x HSV color segmentation + Telea inpainting",
+  "method": "v2 outline decomposition: HSV segmentation, face-void split at a jaw arc, marker watersheds on the gradient surface for the gold family (braids/chain) and the arm split, linework hood hem, plate completion fills",
   "stack_bottom_to_top": [
-    "01_robe",
-    "02_head",
-    "03_braid_L",
-    "04_braid_R",
-    "05_chain",
-    "06_arm_L",
-    "07_arm_R",
-    "08_eyes",
-    "09_grill"
+    "00_torso",
+    "01_neck",
+    "02_hair_back",
+    "03_face_base",
+    "04_arm_l",
+    "05_arm_r",
+    "06_hair_side",
+    "07_hair_side",
+    "08_hair_front",
+    "09_accessory",
+    "10_eye_l",
+    "11_eye_r",
+    "12_mouth",
+    "13_eye_closed_l",
+    "14_eye_closed_r"
   ],
   "layers": [
     {
-      "layer": "01_robe",
-      "pixels": 94036,
+      "layer": "01_bust",
+      "pixels": 151639,
       "bbox_xyxy": [
-        15,
-        270,
-        329,
+        6,
+        91,
+        331,
         863
       ]
     },
     {
-      "layer": "02_head",
-      "pixels": 45678,
+      "layer": "02_neck",
+      "pixels": 2252,
       "bbox_xyxy": [
-        50,
+        149,
+        207,
+        221,
+        253
+      ]
+    },
+    {
+      "layer": "03_hood_outer",
+      "pixels": 18770,
+      "bbox_xyxy": [
+        6,
         17,
-        327,
-        269
+        328,
+        283
       ]
     },
     {
-      "layer": "03_braid_L",
-      "pixels": 5317,
+      "layer": "04_head_jaw",
+      "pixels": 11404,
       "bbox_xyxy": [
-        85,
-        170,
-        177,
-        399
+        111,
+        87,
+        273,
+        233
       ]
     },
     {
-      "layer": "04_braid_R",
-      "pixels": 2467,
+      "layer": "05_arm_L",
+      "pixels": 18154,
       "bbox_xyxy": [
+        15,
+        292,
+        157,
+        462
+      ]
+    },
+    {
+      "layer": "06_arm_R",
+      "pixels": 13946,
+      "bbox_xyxy": [
+        203,
+        292,
+        331,
+        462
+      ]
+    },
+    {
+      "layer": "07_braid_L",
+      "pixels": 5505,
+      "bbox_xyxy": [
+        80,
+        162,
+        176,
+        449
+      ]
+    },
+    {
+      "layer": "08_braid_R",
+      "pixels": 2798,
+      "bbox_xyxy": [
+        207,
+        157,
+        298,
+        404
+      ]
+    },
+    {
+      "layer": "09_hood_rim",
+      "pixels": 4302,
+      "bbox_xyxy": [
+        110,
+        70,
+        263,
+        249
+      ]
+    },
+    {
+      "layer": "10_chain",
+      "pixels": 3010,
+      "bbox_xyxy": [
+        157,
         222,
-        170,
-        299,
-        396
-      ]
-    },
-    {
-      "layer": "05_chain",
-      "pixels": 4062,
-      "bbox_xyxy": [
-        158,
-        225,
-        241,
+        242,
         344
       ]
     },
     {
-      "layer": "06_arm_L",
-      "pixels": 28387,
-      "bbox_xyxy": [
-        15,
-        295,
-        207,
-        459
-      ]
-    },
-    {
-      "layer": "07_arm_R",
-      "pixels": 18206,
-      "bbox_xyxy": [
-        208,
-        295,
-        331,
-        459
-      ]
-    },
-    {
-      "layer": "08_eyes",
-      "pixels": 1332,
+      "layer": "11_eye_L",
+      "pixels": 640,
       "bbox_xyxy": [
         115,
+        95,
+        173,
+        138
+      ]
+    },
+    {
+      "layer": "12_eye_R",
+      "pixels": 692,
+      "bbox_xyxy": [
+        200,
         95,
         269,
         141
       ]
     },
     {
-      "layer": "09_grill",
+      "layer": "13_grill",
       "pixels": 1854,
       "bbox_xyxy": [
         115,
