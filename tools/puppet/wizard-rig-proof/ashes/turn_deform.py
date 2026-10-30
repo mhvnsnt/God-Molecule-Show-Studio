@@ -1,178 +1,97 @@
-"""Ashes head-turn / nod deformation field v2 — TURNFIX 2026-10-29.
+"""Ashes head-turn / nod deformation field v4 — TURNFIX v2, global field.
 
-Shared by build_turnfix.py (bakes keyforms into the .inp) and the
-report. render_turnfix.py renders the baked .inp, so the proof IS the
-rig data.
+WHY v4 REPLACES THE PART-SPECIFIC FIELDS (v2 parabolic, v3 cosine):
+the part separation smeared several visual objects across layers.
+Measured from the .inp textures: the BRAID visual is a stack of
+fragments from the braid parts (5,505 + 2,798 alpha px) PLUS braid
+pixels painted into the torso (1,017/1,843 gold px in the braid
+columns), both arm parts (981 px each) and both accessory parts
+(468/1,336 px). The braid parts ALONE render as disconnected
+fragments (leaf cluster / strand / tassel with gaps) even at rest —
+the composite only looks whole because the fragments coincide.
+ANY part-specific field moves the layers' copies of the same pixels
+by different amounts and the stack separates into the red/gold
+fragment mess seen in the v1 and v2 zoom sheets. No braid-local
+field can fix that; it is a registration problem, not a braid
+problem. (Same story for the chain: two accessory parts with
+byte-identical textures + braid/chain pixels in the torso layer.)
 
-Construction (standard Live2D / pro-rig head-turn, cf. the Smiling
-Friends house-style kits and image2live2d's own _head_turn_warp —
-but applied per-vertex to the part meshes, which the nijilive
-backend never did):
+v4: ONE GLOBAL FIELD OF POSITION. dx and dy are functions of the
+vertex's canvas position (x, y) only — identical for every part —
+so every layer's copy of a pixel moves by the same amount and the
+whole stack stays registered at any angle. The only exceptions are
+the facial features (eyes/grill ride slightly rigid over the face
+plate — they overlap only the uniform void face, so a few px of
+slide there reads as feature motion, not tearing) and a braid-tip
+pitch extra in the nod (braid parts only; the torso's sparse braid
+pixels there are the accepted minor cost — v1's nod, which used
+part fields throughout, already read clean).
 
-  ONE master yaw displacement D(x) for the whole head, from a
-  parabolic dome profile (finite edge slope, no flipped triangles):
-      Z(u) = 0.92 * R * (1 - (u/R)^2),  u = x - CX
-      D(x) = u*(cos t - 1) + Z(u) * sin t        (t = yaw angle)
-  Surface features (eyes, grill) follow D at their own vertices,
-  blended 20% toward D at their centroid (the library's rigidity
-  rule: features stay readable, never fold). The turn reads because
-  features sit where Z is large (they translate up to ~R*sin t)
-  while the outline edges (Z ~ 0) only foreshorten — features shift
-  INSIDE the hood opening, turn-side cheek compresses, far cheek
-  opens. Hood rim rides D at 0.92 weight, hood outer at 0.78 (the
-  shell lags slightly), so shared borders never separate by more
-  than a few px. Braids move per-row (constant across their width,
-  so no tearing): roots take D at the root, tips swing — near braid
-  swings out, far braid tucks (narrowed toward its root line) and
-  shortens, per the owner's acceptance wording. Chain and neck
-  follow through at partial weight.
-
-  Pitch (nod) rotates about the horizontal axis through the NECK
-  pivot (author.py's NECK_DROP rule) with near-uniform depth (the
-  author's pitch rule: uniform depth keeps eye->mouth spacing):
-      dy = (y - py)*(cos p - 1) + Zp * sin p
-  with Zp = R for face+features, 0.9R rim, 0.85R hood; braids swing
-  down/forward at their tips; hood hem pinned to the shoulders.
-
-All coordinates are layer pixels (400x864 canvas, y down).
+Yaw:  dx = W(y) * D(x)   — cosine-dome D (zero edge slope: no folds,
+      measured 0 flipped triangles), W = 1.0 down to y=280 fading to
+      0 at y=580 so the chest follows the head and the robe settles.
+Pitch: dy = P(y) * [(y-PIVOT)*(cos-1) + Zp(x)*sin] — rotation about
+      the neck pivot with dome depth Zp(x); P = 1.0 to y=300 fading
+      to 0 at y=580.
 """
 import math
 
-CX = 192.0          # face centre x (face alpha bbox 111..273)
-R = 81.0            # face dome radius (face half-width)
-FACE_TOP = 87.0
+CX = 192.0
+R = 81.0
+ZMAX = 0.82 * R
 FACE_BOT = 233.0
-PIVOT_Y = FACE_BOT + 0.35 * (FACE_BOT - FACE_TOP)   # neck pivot ~284
+PIVOT_Y = FACE_BOT + 0.35 * (233.0 - 87.0)   # ~284
 
-YAW_MAX = 0.60      # radians at ParamAngleX = +/-30
-PITCH_MAX = 0.55    # radians at ParamAngleY = -/+30
+YAW_MAX = 0.52
+PITCH_MAX = 0.55
 
-BRAIDS = {          # node-name -> (centre_x, root_y, tip_y)
-    "06_hair_side": (128.0, 162.0, 449.0),
-    "07_hair_side": (252.0, 157.0, 404.0),
-}
 FEATURES = ("10_eye_l", "11_eye_r", "12_mouth",
             "13_eye_closed_l", "14_eye_closed_r")
 FEATURE_CX = {"10_eye_l": 144.0, "11_eye_r": 234.5, "12_mouth": 189.0,
               "13_eye_closed_l": 150.0, "14_eye_closed_r": 223.5}
+BRAIDS = ("06_hair_side", "07_hair_side")
 
 
 def _Z(x):
     u = x - CX
     if abs(u) >= R:
         return 0.0
-    return 0.92 * R * (1.0 - (u / R) ** 2)
+    return ZMAX * 0.5 * (1.0 + math.cos(math.pi * u / R))
 
 
 def _D(x, th):
-    """Master yaw displacement at canvas x for yaw angle th."""
-    c, s = math.cos(th), math.sin(th)
-    return (x - CX) * (c - 1.0) + _Z(x) * s
+    return (x - CX) * (math.cos(th) - 1.0) + _Z(x) * math.sin(th)
 
 
-def _fade(y, y0, y1, lo=0.0):
-    if y <= y0:
-        return 1.0
-    if y >= y1:
-        return lo
-    t = (y - y0) / (y1 - y0)
-    return lo + (1.0 - lo) * (1.0 - t * t * (3.0 - 2.0 * t))
+def _smooth(t):
+    t = max(0.0, min(1.0, t))
+    return t * t * (3.0 - 2.0 * t)
 
 
-def _shell_w(x):
-    """Shared hood/rim weight: 0.97 at the face opening -> 0.80 at the
-    hood's outer edge. hair_back and hair_front use the SAME weight at
-    the SAME x, so the two shell layers can never separate."""
-    a = abs(x - CX)
-    if a <= R - 10.0:
-        return 0.97
-    if a >= R + 25.0:
-        return 0.80
-    t = (a - (R - 10.0)) / 35.0
-    return 0.97 + (0.80 - 0.97) * (t * t * (3.0 - 2.0 * t))
+def _W(y):
+    """Yaw follow weight by height: head/braids/chain 1.0, robe -> 0."""
+    return 1.0 - _smooth((y - 280.0) / 300.0)
 
 
-def _island(name, x):
-    """Detached flame-lick islands inside the braid parts (measured
-    from the part textures' alpha components: braid L island
-    x 80-100, braid R island x 277-299 — hood accents that were cut
-    into the braid parts; they must ride with the SHELL, not the
-    braid, or they detach at any turn)."""
-    return (name == "06_hair_side" and x <= 105.0) or \
-           (name == "07_hair_side" and x >= 272.0)
+def _P(y):
+    """Pitch follow weight by height."""
+    return 1.0 - _smooth((y - 300.0) / 280.0)
 
 
 def field(name, x, y, s_yaw, s_pitch):
-    """Displacement (dx, dy) in layer px for a vertex of part `name`
-    at (x, y). s_yaw = ParamAngleX/30 (+ = turn toward screen-right),
-    s_pitch = -ParamAngleY/30 (+ = nod down)."""
-    if name.startswith("03_face"):
-        name = "03_face_base"   # underplate deforms with the face plate
     dx = dy = 0.0
-
-    # ---------- YAW ----------
     if s_yaw != 0.0:
         th = s_yaw * YAW_MAX
         if name in FEATURES:
-            cx_f = FEATURE_CX[name]
-            dx += 0.8 * _D(x, th) + 0.2 * _D(cx_f, th)
-        elif name == "03_face_base":
-            dx += _D(x, th) * _fade(y, FACE_BOT, PIVOT_Y, lo=0.55)
-        elif name == "02_hair_back":      # hood outer (shared shell weight)
-            dx += _shell_w(x) * _D(x, th) * _fade(y, 240.0, 283.0, lo=0.0)
-        elif name == "08_hair_front":     # hood rim (same shell weight)
-            dx += _shell_w(x) * _D(x, th) * _fade(y, 235.0, 249.0, lo=0.7)
-        elif name in BRAIDS and _island(name, x):
-            dx += _shell_w(x) * _D(x, th) * _fade(y, 235.0, 249.0, lo=0.7)
-        elif name in BRAIDS:
-            bcx, root, tip = BRAIDS[name]
-            side = 1.0 if bcx > CX else -1.0
-            t = max(0.0, min(1.0, (y - root) / (tip - root)))
-            turn_side = (s_yaw > 0 and side > 0) or (s_yaw < 0 and side < 0)
-            if turn_side:   # near braid: root tracks the jaw anchor, tips swing out
-                root_dx = _D(CX + side * 33.0, th)
-                tip_dx = root_dx + s_yaw * 24.0
-                dx += root_dx * (1.0 - t) + tip_dx * t
-            else:           # far braid: root tracks its side's face EDGE, tuck + shorten
-                root_dx = _D(CX + side * 74.5, th)
-                tip_dx = root_dx * 0.85
-                dx += (root_dx * (1.0 - t) + tip_dx * t
-                       - (x - bcx) * 0.5 * abs(s_yaw))
-                dy += -9.0 * abs(s_yaw) * t
-        elif name.startswith("09_accessory"):
-            dx += 0.45 * _D(x, th)
-        elif name == "01_neck":
-            dx += 0.3 * _D(x, th) * _fade(y, 230.0, 253.0, lo=0.0)
-        # torso / arms: no yaw
-
-    # ---------- PITCH (nod) ----------
+            dx += _W(y) * (0.75 * _D(x, th) + 0.25 * _D(FEATURE_CX[name], th))
+        else:
+            dx += _W(y) * _D(x, th)
     if s_pitch != 0.0:
         ph = s_pitch * PITCH_MAX
         c, s = math.cos(ph), math.sin(ph)
-        dyv = y - PIVOT_Y
-        if name in FEATURES or name == "03_face_base":
-            d = dyv * (c - 1.0) + R * s
-            if name == "03_face_base":
-                d *= _fade(y, FACE_BOT, PIVOT_Y, lo=0.6) if y > FACE_BOT else 1.0
-            dy += d
-        elif name in ("02_hair_back", "08_hair_front"):
-            zp = R * (0.88 + 0.12 * ((_shell_w(x) - 0.80) / 0.17))
-            pin = _fade(y, 240.0, 283.0, lo=0.0) if name == "02_hair_back" \
-                else _fade(y, 235.0, 249.0, lo=0.7)
-            dy += (dyv * (c - 1.0) + zp * s) * pin
-        elif name in BRAIDS and _island(name, x):
-            zp = R * (0.88 + 0.12 * ((_shell_w(x) - 0.80) / 0.17))
-            dy += (dyv * (c - 1.0) + zp * s) * _fade(y, 235.0, 249.0, lo=0.7)
-        elif name in BRAIDS:
-            bcx, root, tip = BRAIDS[name]
-            t = max(0.0, min(1.0, (y - root) / (tip - root)))
-            base = dyv * (c - 1.0) + 0.9 * R * s
-            dy += base * (1.0 - t) + (base + s * 52.0) * t
-            if x != CX:
-                dx += -math.copysign(1.0, x - CX) * 6.0 * abs(s_pitch) * t
-        elif name.startswith("09_accessory"):
-            hang = max(0.0, min(1.0, (y - 222.0) / 122.0))
-            dy += dyv * (c - 1.0) + 0.5 * R * s + s * 20.0 * hang
-        elif name == "01_neck":
-            dy += (dyv * (c - 1.0) + 0.3 * R * s) * _fade(y, 230.0, 253.0, lo=0.0)
+        zp = R * (0.85 + 0.15 * (_Z(x) / ZMAX))
+        dy += _P(y) * ((y - PIVOT_Y) * (c - 1.0) + zp * s)
+        if name in BRAIDS:
+            # braid tips swing forward/down past the global rotation
+            dy += s * 48.0 * _smooth((y - 280.0) / 170.0) * _P(y)
     return dx, dy

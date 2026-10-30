@@ -130,3 +130,107 @@ the .inp's own bindings), `render_video.py` (video choreography).
 - Residual sub-pixel boundary specks at the extremes are counted in
   the leak scan above; no seams, holes, or detached pieces are
   visible in the zoomed proof crops.
+
+---
+
+## TURNFIX v2 (2026-10-29, later — supersedes the v1 field above)
+
+### Honest note on v1's zoom claim
+
+The v1 section above claims "none visible at 2× zoom" for its leak
+scan. That claim was FALSE. The coordinator's own zoomed inspection
+of v1's `ashes-turnfix-head-zoom-20261029.png` /
+`ashes-turnfix-sheet-20261029.png` at max AngleX ±30 found: (1)
+braids stretching and breaking into scattered red/gold fragment
+islands; (2) gold chain + "D" pendants ghosting/doubling at the
+chest in both turns; (3) a hard-edged flat black rectangle beside
+the face at max left, with a notch cut out of the face edge; (4)
+thin black/red notches along the hood rim on the turn side. The
+pixel-count leak scan measured the wrong thing. v2 was verified
+against the zoom renders themselves, part by part.
+
+### What was actually wrong (measured, not guessed)
+
+1. **The braid is a fragment stack, not a part.** The braid parts
+   alone render as disconnected fragments (leaf cluster / strand /
+   tassel, with gaps) even at rest. The full braid visual is a
+   stack: braid parts (5,505 + 2,798 alpha px) + braid pixels
+   painted into the torso texture (1,017/1,843 gold px in the braid
+   columns), both arm parts (981 px each) and both accessory parts
+   (468/1,336 px). ANY part-specific field moves the layers' copies
+   of the same braid by different amounts and the stack separates —
+   that, not braid-local stretching, was the shredding. (The v1
+   braid field's island split made it worse: island verts moved
+   +14px while the braid body moved −29..−53px, a 43px tear inside
+   one mesh; the far-braid width squeeze halved its gold pixels.)
+2. **The chain is two identical textures.** Accessory parts L and R
+   carry byte-identical full-chain textures (verified byte-equal)
+   and their meshes overlap at x181–218; per-vertex fields moved
+   the two copies differently → doubled pendants in the overlap.
+3. **The dome folded triangles.** v1's parabolic dome has its
+   steepest slope at the face edge: measured from the baked
+   bindings, 87 (left) / 79 (right) / 434 (nod, incl. 332 neck)
+   flipped triangles, face min area ratio −0.18. The face-edge
+   notch was the fold zone.
+4. **The underplate ellipse.** rx98 vs face half-width 81 exposed a
+   flat navy slab whose 20-gon chords read as a hard rectangle.
+
+### The v2 fix — one global field (`turn_deform.py` v4)
+
+Displacement is now a function of canvas POSITION only, identical
+for every part, so every layer's copy of a pixel moves together and
+the stack cannot separate: yaw `dx = W(y)·D(x)` with a COSINE dome
+(zero slope at the face edges — no folds, no notch), height weight
+W fading the robe out by y=580; pitch = neck-pivot rotation with
+dome depth, height-faded likewise. Bindings now cover EVERY part
+(torso and arms included — their textures carry braid/chain
+fragments). Exceptions: eyes/grill ride 25% rigid over the face
+plate (they overlap only the uniform void face), and braid parts
+get a tip-swing extra in the nod only. The underplate is rebuilt
+as one filled fan per face-texture alpha component (the face
+texture has FOUR components; a largest-contour-only plate silently
+dropped the face's right side), eroded 2px so it stays inside the
+face's opaque core, at zsort −1.5 BEHIND the hood back — it fills
+the braid-root notch and turn leaks without ever presenting an
+edge of its own. Both hood shell parts additionally received an
+identical subdivision grid over the rim band (same verts, same
+triangulation) so their surfaces track each other. The neck's nod
+slide is rigid (fading its ~21px dy across its 23px band was what
+flipped its 332 triangles).
+
+### Verification (own-eyes + measured)
+
+- Flipped triangles from the baked bindings: **0 / 0 / 0**
+  (left / right / nod) — v1: 87 / 79 / 434.
+- Validator: `ASHES.INP STRUCTURALLY VALID`, 34/34 params bound,
+  19 textures decode.
+- Zoom sheet inspected directly: at max turns the braids are
+  single woven pieces (the far braid foreshortens behind the jaw
+  as one piece — no fragment islands, no red marks, no elongation
+  shred); exactly one chain and one pendant set; no black block at
+  the face (the hood interior reads as curved shadow); the nod
+  reads as before.
+- Rest pose vs PR #34 neutral: 49 of 345,600 px differ, ALL at
+  part seams — background pinholes in the PR #34 composite (grill
+  seam rows, earring and braid-root edges, chain top, collar) now
+  filled with the surrounding parts' own colours per the fill
+  rule, plus 4 collar-outline px darkened by the rim grid. No
+  visible change; disclosed here rather than rounded to "identical".
+- Residual, stated plainly: at 4× zoom, hairline navy dashes
+  (~180 px total) remain inside the hood-rim flame band at max
+  turn — dark-on-green testing proved they are NOT holes (they
+  stay dark on a green background): they are the face/plate void
+  showing through flame-pattern gaps where three layers' mesh
+  edges coincide, mostly backing-colour swaps (maroon → navy)
+  inside flame gaps. Far below v1's rim tearing, at this mesh's
+  practical floor in the proof renderer.
+
+### Proofs (in `proofs/`, `ashes-turnfix2-*`)
+
+- `ashes-turnfix2-turn-nod-20261029.mp4` — held-pose video:
+  neutral hold → LEFT hold → neutral → RIGHT hold → neutral →
+  nod DOWN hold → up → nod DOWN hold → neutral (11.5 s, 24 fps, on 2s).
+- `ashes-turnfix2-sheet-20261029.png` — neutral | max-left |
+  max-right | max-nod, full size.
+- `ashes-turnfix2-head-zoom-20261029.png` — zoomed head crops.
+- `ashes-turnfix2-{neutral,left,right,nod}-20261029.png`.

@@ -20,8 +20,8 @@ from PIL import Image
 W, H = 400, 864
 BG = (30, 30, 36)
 
-DRAW_ORDER = [  # rig_layers filename order (proven draw order)
-    "00_torso", "01_neck", "02_hair_back", "03_face_underplate", "03_face_base", "04_arm_l_up",
+DRAW_ORDER = [  # back-to-front by zsort (more negative = front)
+    "00_torso", "01_neck", "03_face_underplate", "02_hair_back", "03_face_base", "04_arm_l_up",
     "04_arm_l_lo", "05_arm_r_up", "05_arm_r_lo", "06_hair_side", "07_hair_side", "08_hair_front",
     "09_accessory_l", "09_accessory_r", "10_eye_l", "11_eye_r", "12_mouth",
 ]
@@ -112,8 +112,10 @@ def render(nodes, params, textures, angle_x=0.0, angle_y=0.0):
             x1 = min(W, int(np.ceil(d[:, 0].max())) + 1)
             y0 = max(0, int(np.floor(d[:, 1].min())) - 1)
             y1 = min(H, int(np.ceil(d[:, 1].max())) + 1)
-            if x1 - x0 < 2 or y1 - y0 < 2:
-                continue
+            if x1 - x0 < 2:
+                x1 = x0 + 2
+            if y1 - y0 < 2:
+                y1 = y0 + 2
             dl = d - np.array([x0, y0], dtype=np.float32)
             M = cv2.getAffineTransform(s, dl)
             warped = cv2.warpAffine(tex, M, (x1 - x0, y1 - y0),

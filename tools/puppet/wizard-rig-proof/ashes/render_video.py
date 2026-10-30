@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the TURNFIX proof video from Ashes_turnfix.inp.
+"""Render the TURNFIX proof video from Ashes_turnfix3.inp.
 
 Choreography per the owner's acceptance (holds are the point, so it
 cannot read as a sway):
@@ -51,7 +51,7 @@ print(f"{NFRAMES} frames, {len(pose_keys)} unique poses")
 _N = {}
 def init():
     global _N
-    _N["nodes"], _N["params"], _N["textures"] = R.load_inp("Ashes_turnfix.inp")
+    _N["nodes"], _N["params"], _N["textures"] = R.load_inp("Ashes.inp")
 
 def job(key):
     ax, ay = key

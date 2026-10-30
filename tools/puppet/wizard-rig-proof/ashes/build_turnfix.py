@@ -1,30 +1,29 @@
 #!/usr/bin/env python3
-"""Bake real head-turn / nod DEFORM keyforms into Ashes.inp — TURNFIX.
+"""Bake real head-turn / nod DEFORM keyforms into Ashes.inp — TURNFIX v2.
 
-Root cause (verified in the shipped PR #34 Ashes.inp): ParamAngleX and
-ParamAngleY carried NO "deform" bindings at all — only a head-group
-node rotation (transform.r.y [-0.52,0,0.52] / transform.r.x
-[-0.42,0,0.42]) plus physics-anchor slides. image2live2d's author.py
-states why: "ParamAngle* mesh_offsets stay empty ... the nijilive
-backend synthesises its own head turn". That synthesis is a uniform
-cos-squash of the whole head group about its bbox pivot — features and
-outline move identically, so no turn can ever read. The owner's words
-on the resulting proof: "more like a standing cross armed idle sway
-with a blink than a turn and nod".
+Same patch shape as v1 (see RIG_TURNFIX_2026-10-29.md for the root
+cause: PR #34's ParamAngleX/Y carried NO deform bindings, only a
+head-group rotation + the preview's uniform cos-squash). v2 keeps the
+deform approach and the nod, and replaces the deformation FIELD with
+turn_deform.field — the v4 GLOBAL field: displacement is a function
+of canvas position only (cosine dome in x, height weights in y),
+identical for every part, because the part separation smeared the
+braids/chain across five layers whose copies must move together or
+the stack shreds (see turn_deform.py's header and the v2 section of
+RIG_TURNFIX_2026-10-29.md). The underplate is a face-silhouette
+plate (one filled fan per face-texture alpha component, eroded 2px,
+zsort -1.5 behind the hood back) instead of v1's 20-gon ellipse,
+whose exposed slab read as a black rectangle at max turn.
 
-This script patches the puppet JSON inside Ashes.inp:
   * REMOVES the transform.r.y / transform.r.x node bindings from
     ParamAngleX / ParamAngleY (the rigid squash path).
-  * ADDS per-vertex "deform" bindings for every head part (and the
-    neck follow-through) at the 3 existing axis points (-30, 0, +30),
-    computed by turn_deform.field — dome-depth rotation about the
-    neck pivot, features leading the outline.
-  * KEEPS the physics-anchor bindings (hair physics still driven by
-    the Angle params) and ParamAngleZ's roll (a legit in-plane tilt).
-Texture section is carried over byte-for-byte; only the JSON length
-header is updated. Vertex->pixel mapping was fit from the file itself
-(px = 0.4*vx + bx, py = 0.864*vy + by, residual ~1e-12) and is
-re-fit per node here, with slopes asserted.
+  * ADDS per-vertex "deform" bindings for EVERY part at the 3
+    existing axis points (-30, 0, +30) — torso and arms included,
+    because their textures carry braid/chain fragments.
+  * KEEPS the physics-anchor bindings and ParamAngleZ's roll.
+Texture section gains ONE appended entry (the underplate's solid
+texture); all existing entries are carried over byte-for-byte.
+Vertex->pixel mapping is re-fit per node here, with slopes asserted.
 """
 import json
 import struct
@@ -80,15 +79,57 @@ if UNDERPLATE_UUID not in nodes:
     entries.append(struct.pack(">I", len(png)) + b"\x00" + png)
     tail = b"TEX_SECT" + struct.pack(">I", len(entries)) + b"".join(entries) + rest
     new_tex_index = len(entries) - 1
-    # ellipse fan mesh in layer px, converted with the face fit below
-    cx, cy, rx, ry, seg = 192.0, 196.0, 98.0, 58.0, 20
-    ring = [(cx + rx * _math.cos(2 * _math.pi * i / seg),
-             cy + ry * _math.sin(2 * _math.pi * i / seg)) for i in range(seg)]
-    pts = [(cx, cy)] + ring
+    # Face-SILHOUETTE plate (v2): filled external contour of the face
+    # texture's alpha, dilated 9px. v1's ellipse (rx98 vs face
+    # half-width 81) exposed a flat slab beside the face at max turn
+    # whose polygon chords read as a black rectangle. The silhouette
+    # plate can only ever expose a thin curved shadow ring, and its
+    # filled interior covers the braid-root notch zone by construction.
+    import cv2 as _cv2
+    _face_tex_idx = nodes[5]["textures"][0]
+    _fe = entries[_face_tex_idx]
+    _flen = struct.unpack(">I", _fe[:4])[0]
+    _fimg = _Image.open(_io.BytesIO(_fe[5:5 + _flen])).convert("RGBA")
+    _alpha = np.array(_fimg)[:, :, 3]
+    _mask = (_alpha > 10).astype(np.uint8) * 255
+    # the face texture is FOUR alpha components (main plate + right
+    # cheek/ear pieces + left ear tip) — fill EVERY external contour
+    # and union them; v2's largest-contour-only plate silently
+    # dropped the face's right side (plate stopped at x255 of 274)
+    _cnts, _ = _cv2.findContours(_mask, _cv2.RETR_EXTERNAL, _cv2.CHAIN_APPROX_SIMPLE)
+    # ONE FAN PER COMPONENT: dilating the union failed to bridge the
+    # components (plate stopped at x254 of 277), so each component
+    # gets its own filled fan, dilated 2px to cover its AA edge.
+    # Disjoint fans in one mesh are fine — the plate sits BEHIND
+    # hair_back (zsort -1.5), so the fans are invisible at rest and
+    # only fill the braid-root notch + turn leaks in a pose.
+    fans = []
+    for _c in _cnts:
+        if _cv2.contourArea(_c) < 40:
+            continue
+        _one = np.zeros_like(_mask)
+        _cv2.drawContours(_one, [_c], -1, 255, -1)
+        # ERODE 2px: the plate must stay strictly inside the face's
+        # opaque core. A dilated plate reaches behind the face's
+        # anti-aliased edge pixels and changes their blend at rest
+        # (161 changed px measured); eroded, the rest backdrop stays
+        # hair_back exactly as PR #34, and the plate still fills the
+        # interior notch (its job) in a pose.
+        _one = _cv2.erode(_one, _cv2.getStructuringElement(_cv2.MORPH_ELLIPSE, (5, 5)))
+        _cc, _ = _cv2.findContours(_one, _cv2.RETR_EXTERNAL, _cv2.CHAIN_APPROX_SIMPLE)
+        _oc = max(_cc, key=_cv2.contourArea)
+        _ap = _cv2.approxPolyDP(_oc, 2.0, True).reshape(-1, 2)
+        _Mm = _cv2.moments(_oc)
+        _cx, _cy = _Mm["m10"] / _Mm["m00"], _Mm["m01"] / _Mm["m00"]
+        fans.append(((float(_cx), float(_cy)),
+                     [(float(a), float(b)) for a, b in _ap]))
+    pts = fans   # consumed by the fan-builder below as a fan list
+    print(f"underplate silhouette: {len(fans)} fans, "
+          f"{sum(len(r) for _, r in fans)} ring pts")
     # placeholder verts; real verts set after the face fit is known
     node = {
         "uuid": UNDERPLATE_UUID, "name": "03_face_underplate",
-        "type": "Part", "enabled": True, "zsort": -2.5,
+        "type": "Part", "enabled": True, "zsort": -1.5,
         "transform": {"trans": [0.0, 0.0, 0.0], "rot": [0.0, 0.0, 0.0],
                       "scale": [1.0, 1.0]},
         "lockToRoot": False, "pinToMesh": False,
@@ -102,10 +143,9 @@ if UNDERPLATE_UUID not in nodes:
     pos = next(i for i, c in enumerate(head["children"]) if c["uuid"] == 5)
     head["children"].insert(pos, node)
     nodes[UNDERPLATE_UUID] = node
-    print(f"underplate added: texture index {new_tex_index}, zsort -2.5")
+    print(f"underplate added: texture index {new_tex_index}, zsort -1.5 (behind hair_back)")
 
-HEAD_PARTS = [4, 5, 90, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]  # head node 20 children + underplate
-NECK = 3
+ALL_PARTS = [2, 3, 4, 5, 90, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]  # every Part node: the v4 field is global (position-based), so torso/arms/accessory must carry it too or their painted fragments separate from the head parts
 
 def node_px(n):
     """(px, py) arrays for a Part node's verts, fit from its own uvs."""
@@ -158,25 +198,32 @@ def _bridge(n, x0, x1, y0, y1, nx=4, ny=3):
     m["indices"] = idx
     print(f"bridge added to {n['name']}: +{(nx+1)*(ny+1)} verts")
 
-_bridge(nodes[4], 222, 262, 20, 62)    # 02_hair_back
-_bridge(nodes[12], 222, 262, 20, 62)   # 08_hair_front
+# v2: rim-band subdivision — an IDENTICAL grid (same verts, same
+# triangulation) added to BOTH shell parts over the whole hood-rim
+# region, so their piecewise-linear surfaces track each other under
+# the field and the dark interior dashes along the flame edges close.
+# (Supersedes v1's small 222-262/20-62 bridges; this region contains
+# that zone.)
+_bridge(nodes[4], 100, 280, 15, 260, nx=9, ny=12)    # 02_hair_back
+_bridge(nodes[12], 100, 280, 15, 260, nx=9, ny=12)   # 08_hair_front
 
 # set the underplate's real verts/uvs from its px points via the face fit
 if "_underplate_pts_px" in nodes.get(UNDERPLATE_UUID, {}):
     _face = nodes[5]
     _, _, _, _ax, _ay = node_px(_face)
-    _pts = nodes[UNDERPLATE_UUID].pop("_underplate_pts_px")
-    _seg = len(_pts) - 1
+    _fans = nodes[UNDERPLATE_UUID].pop("_underplate_pts_px")
     _verts, _uvs, _idx = [], [], []
-    for i, (pxx, pyy) in enumerate(_pts):
-        _verts += [(pxx - _ax[1]) / _ax[0], (pyy - _ay[1]) / _ay[0]]
-        if i == 0:
-            _uvs += [0.5, 0.5]
-        else:
-            a = 2 * np.pi * (i - 1) / _seg
-            _uvs += [0.5 + 0.44 * float(np.cos(a)), 0.5 + 0.44 * float(np.sin(a))]
-    for i in range(1, _seg + 1):
-        _idx += [0, i, i % _seg + 1]
+    for _cen, _ring in _fans:
+        _base = len(_verts) // 2
+        _verts += [(_cen[0] - _ax[1]) / _ax[0], (_cen[1] - _ay[1]) / _ay[0]]
+        _uvs += [0.5, 0.5]
+        for (pxx, pyy) in _ring:
+            _verts += [(pxx - _ax[1]) / _ax[0], (pyy - _ay[1]) / _ay[0]]
+            _ang = np.arctan2(pyy - _cen[1], pxx - _cen[0])
+            _uvs += [0.5 + 0.44 * float(np.cos(_ang)), 0.5 + 0.44 * float(np.sin(_ang))]
+        _seg = len(_ring)
+        for i in range(1, _seg + 1):
+            _idx += [_base, _base + i, _base + i % _seg + 1]
     _m = nodes[UNDERPLATE_UUID]["mesh"]
     _m["verts"] = [float(v) for v in _verts]
     _m["uvs"] = [float(v) for v in _uvs]
@@ -205,39 +252,13 @@ def deform_values(n, axis):
         out.append(offs)
     return out
 
-def deform_values_torso(n):
-    """AngleY follow-through for the torso top band: the collar trim
-    islands at the neck (measured torso alpha islands y 91-146) are
-    covered by the hood at rest but detach in a nod if the torso is
-    rigid. Weight 1.0 at the collar -> 0 at y=340 (chest stays)."""
-    import math as _m
-    from turn_deform import PITCH_MAX, PIVOT_Y, R as _R
-    v, px, py, ax, ay = node_px(n)
-    out = []
-    for s in (-1.0, 0.0, 1.0):
-        nod = -s
-        ph = nod * PITCH_MAX
-        offs = []
-        for x, y in zip(px, py):
-            if y <= 150.0:
-                w = 1.0
-            elif y >= 340.0:
-                w = 0.0
-            else:
-                t = (y - 150.0) / 190.0
-                w = 1.0 - t * t * (3.0 - 2.0 * t)
-            dy = ((y - PIVOT_Y) * (_m.cos(ph) - 1.0) + _R * _m.sin(ph)) * w
-            offs.append([0.0, dy / ay[0]])
-        out.append(offs)
-    return out
-
 report = {}
 for p in pj["param"]:
     if p["name"] == "ParamAngleX":
         before = [(b["node"], b["param_name"]) for b in p["bindings"]]
         p["bindings"] = [b for b in p["bindings"]
                          if not (b["node"] == 20 and b["param_name"] == "transform.r.y")]
-        for u in HEAD_PARTS + [NECK]:
+        for u in ALL_PARTS:
             n = nodes[u]
             p["bindings"].append({
                 "node": u, "param_name": "deform",
@@ -251,7 +272,7 @@ for p in pj["param"]:
         before = [(b["node"], b["param_name"]) for b in p["bindings"]]
         p["bindings"] = [b for b in p["bindings"]
                          if not (b["node"] == 20 and b["param_name"] == "transform.r.x")]
-        for u in HEAD_PARTS + [NECK]:
+        for u in ALL_PARTS:
             n = nodes[u]
             p["bindings"].append({
                 "node": u, "param_name": "deform",
@@ -259,12 +280,6 @@ for p in pj["param"]:
                 "isSet": [[True], [True], [True]],
                 "interpolate_mode": "Linear",
             })
-        p["bindings"].append({
-            "node": 2, "param_name": "deform",
-            "values": deform_values_torso(nodes[2]),
-            "isSet": [[True], [True], [True]],
-            "interpolate_mode": "Linear",
-        })
         report["ParamAngleY"] = {"before": before,
                                  "after": [(b["node"], b["param_name"]) for b in p["bindings"]]}
 
