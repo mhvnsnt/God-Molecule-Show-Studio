@@ -37,3 +37,8 @@ On 2026-10-17, commit cd3bf38 ("DXMMII limb system", PR mhvnsnt/western-heart#22
 5. MERGE GATE — the merger reads the PR's deletion list against the task description before merging. Unexplained deletions block the merge. "CI is green" does not excuse a deletion list the task never asked for. A red, conflicting, or lossy PR stays open with a comment naming the blocker.
 
 (Co-authored with Aider and Copilot per the ALL-AGENTS-WORKFLOW LAW. Cline's seat stays open — its free-tier API was down during drafting.)
+
+## god-molecule-scene-builder (scene direction skill)
+- `skills/god-molecule-scene-builder/SKILL.md` + `skills/god-molecule-scene-builder/project-bible.md`
+- Use this skill whenever anyone asks to make a scene, build a prompt for a scene, do the next scene, or start a new episode. Trigger phrasings: "make a scene where…", "next scene:", "build the prompt for this scene", "new episode".
+- Chain: Idea → shots → timestamps → camera → actions → dialogue → references → final prompt. Principle: whatever the prompt leaves undefined, the model invents. World: the skill's project-bible.md, backed by this repo's own canon docs (see the skill for paths).
