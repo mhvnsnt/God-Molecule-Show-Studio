@@ -1,5 +1,9 @@
 # AGENTS.md
 
+## PRE-MADE PARTS FIRST
+
+PRE-MADE PARTS FIRST (Mars, 2026-11-20): Don't hand-build what already exists and works well. Before decoding, decrypting, reverse-engineering, or building anything from scratch, go get the pre-made part from wherever it already exists and work FROM it. Sources: commercial games, open source, closed-source teardowns (study from public sources, rebuild equivalents), the fan translation / ROM hacking scene, the modding community, fan-made tools and docs, decompilations (decomps) and recompilations (recomps), community knowledge (Xentax/ZenHAX, TCRF, wikis, FAQs, archive.org). Like building a machine: you don't build a battery or a cog from scratch, you order the pre-made part and keep building. Spend the work on the innovative parts, not on re-doing what's already well-built. Only build from scratch what nobody has already built.
+
 ## ANIMATION LAWS (owner 2026-10-14) — applies to Goodville, God Molecule, Mystery Coast, EP01 and every animated piece
 See `ANIMATION-REFERENCE.md` and [GOODVILLE-POSTMORTEM](https://github.com/mhvnsnt/TRIPPEDD-Production-studios-/blob/main/production/TRIPPEDD_EP01/goodville/GOODVILLE-POSTMORTEM.md).
 1. **Consult before animating.** Open `mhvnsnt/animation-research-library` (private) and the matching technique for the shot (punch, take, walk, lip sync, cutout rig) BEFORE touching a frame. Cite it in the PR.
